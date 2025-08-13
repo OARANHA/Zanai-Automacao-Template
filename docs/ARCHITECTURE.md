@@ -596,7 +596,7 @@ Kilo-Code-Automacao-Template/
 │   └── e2e/                           # Testes end-to-end
 ├── .env.example                       # Variáveis de ambiente exemplo
 ├── .gitignore                         # Arquivos ignorados pelo Git
-├── killo.config                       # Configuração do Killo
+├── killo.config                       # Configuração do Zanai
 ├── package.json                       # Dependências do projeto
 ├── package-lock.json                  # Lock de dependências
 ├── README.md                          # Documentação principal

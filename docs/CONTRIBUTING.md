@@ -306,7 +306,7 @@ nano .env
 
 # Dê permissões aos scripts
 chmod +x scripts/*.sh
-chmod +x .killo-workspace/scripts/*.sh
+chmod +x .Zanai-workspace/scripts/*.sh
 ```
 
 ### Fluxo de Trabalho
@@ -837,7 +837,7 @@ const execAsync = promisify(exec);
 describe('CLI E2E Tests', () => {
   it('deve iniciar CLI e executar comando', async () => {
     // Arrange
-    const command = 'echo "status" | node src/cli/killo-cli.js';
+    const command = 'echo "status" | node src/cli/Zanai-cli.js';
     
     // Act
     const { stdout, stderr } = await execAsync(command, { timeout: 10000 });

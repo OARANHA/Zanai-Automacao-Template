@@ -1,5 +1,5 @@
 /**
- * Kilo Code - Command Processor
+ * Zanai - Command Processor
  * Processa comandos em linguagem natural e executa actions correspondentes
  */
 
@@ -31,7 +31,7 @@ class CommandProcessor {
   }
 
   async initialize() {
-    console.log('🚀 Inicializando Kilo Command Processor...');
+    console.log('🚀 Inicializando Zanai Command Processor...');
     
     // Inicializar ZAI
     this.zai = await ZAI.create();
@@ -44,7 +44,7 @@ class CommandProcessor {
   }
 
   async loadActions() {
-    const actionsPath = path.join('.killo-workspace', 'agent', 'actions');
+    const actionsPath = path.join('.zanai-workspace', 'agent', 'actions');
     try {
       const files = await fs.readdir(actionsPath);
       
@@ -64,7 +64,7 @@ class CommandProcessor {
   }
 
   async loadPrompts() {
-    const promptsPath = path.join('.killo-workspace', 'agent', 'prompts');
+    const promptsPath = path.join('.zanai-workspace', 'agent', 'prompts');
     try {
       const files = await fs.readdir(promptsPath);
       

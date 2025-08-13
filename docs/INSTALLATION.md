@@ -186,7 +186,7 @@ mkdir -p temp
 
 # Dar permissões de execução
 chmod +x scripts/*.sh
-chmod +x .killo-workspace/scripts/*.sh
+chmod +x .Zanai-workspace/scripts/*.sh
 ```
 
 ### Passo 3: Configuração do Banco de Dados (Opcional)
@@ -264,7 +264,7 @@ module.exports = {
   agent: {
     name: 'DeepSeek-FSA-Autonomous',
     version: '4.0',
-    workspace: './.killo-workspace',
+    workspace: './.Zanai-workspace',
     autoRecovery: true,
     continuousOperation: true
   },
@@ -313,7 +313,7 @@ module.exports = {
 
 #### Configuração do Agente
 
-Editar `.killo-workspace/agent/agent.yaml`:
+Editar `.Zanai-workspace/agent/agent.yaml`:
 
 ```yaml
 agent:
@@ -452,7 +452,7 @@ npm run health-check
 npm run cli
 
 # Dentro do CLI, digitar:
-killo> status
+Zanai> status
 
 # Saída esperada:
 # 📊 Status do Sistema:
@@ -486,11 +486,11 @@ curl -X GET http://localhost:3000/semantic-search/status
 
 ```bash
 # Verificar agentes carregados
-ls -la .killo-workspace/agent/actions/
-ls -la .killo-workspace/agent/prompts/
+ls -la .Zanai-workspace/agent/actions/
+ls -la .Zanai-workspace/agent/prompts/
 
 # Verificar configuração do agente
-cat .killo-workspace/agent/agent.yaml
+cat .Zanai-workspace/agent/agent.yaml
 ```
 
 ---
@@ -520,7 +520,7 @@ brew install node
 ```bash
 # Dar permissões
 chmod +x scripts/*.sh
-chmod +x .killo-workspace/scripts/*.sh
+chmod +x .Zanai-workspace/scripts/*.sh
 
 # Ou usar sudo (não recomendado)
 sudo npm install
@@ -590,9 +590,9 @@ netstat -tulpn | grep :3000
 npm run cli
 
 # Experimentar comandos
-killo> ajuda
-killo> escrever um e-book sobre JavaScript
-killo> criar um projeto react
+Zanai> ajuda
+Zanai> escrever um e-book sobre JavaScript
+Zanai> criar um projeto react
 ```
 
 ### 2. Explorar a Documentação
@@ -608,7 +608,7 @@ cat docs/COMMANDS.md
 
 ```bash
 # Editar configuração do agente
-nano .killo-workspace/agent/agent.yaml
+nano .Zanai-workspace/agent/agent.yaml
 
 # Adicionar novos actions/prompts
 # Ver documentação de desenvolvimento

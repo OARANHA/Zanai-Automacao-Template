@@ -110,7 +110,7 @@ export KILO_PORT=3001
 npm start
 
 # Ou matar todos os processos Node.js
-pkill -f "node.*killo"
+pkill -f "node.*Zanai"
 pkill -f "node.*app.js"
 ```
 
@@ -118,7 +118,7 @@ pkill -f "node.*app.js"
 
 **Sintomas:**
 ```
-Error: Cannot find module '.killo-workspace/agent/agent.yaml'
+Error: Cannot find module '.Zanai-workspace/agent/agent.yaml'
 ```
 
 **Causa:** Estrutura de diretórios incompleta ou arquivos ausentes.
@@ -126,19 +126,19 @@ Error: Cannot find module '.killo-workspace/agent/agent.yaml'
 **Solução:**
 ```bash
 # Verificar estrutura de diretórios
-ls -la .killo-workspace/
-ls -la .killo-workspace/agent/
+ls -la .Zanai-workspace/
+ls -la .Zanai-workspace/agent/
 
 # Se diretórios não existirem, criar estrutura
-mkdir -p .killo-workspace/agent/actions
-mkdir -p .killo-workspace/agent/prompts
+mkdir -p .Zanai-workspace/agent/actions
+mkdir -p .Zanai-workspace/agent/prompts
 
 # Recuperar arquivos críticos
 npm run recover
 
 # Ou clonar novamente o repositório
 git clone https://github.com/OARANHA/Kilo-Code-Automacao-Template.git temp
-cp -r temp/.killo-workspace/ .killo-workspace/
+cp -r temp/.Zanai-workspace/ .Zanai-workspace/
 rm -rf temp
 ```
 
@@ -148,7 +148,7 @@ rm -rf temp
 
 **Sintomas:**
 ```
-killo> escrever um e-book sobre React
+Zanai> escrever um e-book sobre React
 ❌ Não consegui entender o comando. Tente: "escrever um e-book sobre [tema]"
 ```
 
@@ -158,11 +158,11 @@ killo> escrever um e-book sobre React
 ```bash
 # Verificar status do sistema
 npm run cli
-killo> status
+Zanai> status
 
 # Verificar se actions e prompts existem
-ls -la .killo-workspace/agent/actions/
-ls -la .killo-workspace/agent/prompts/
+ls -la .Zanai-workspace/agent/actions/
+ls -la .Zanai-workspace/agent/prompts/
 
 # Reinicializar o sistema
 npm run init
@@ -186,7 +186,7 @@ tail -f logs/kilo.log
 **Solução:**
 ```bash
 # Matar processo CLI
-pkill -f "killo-cli"
+pkill -f "Zanai-cli"
 pkill -f "node.*cli"
 
 # Verificar se há processos zombies
@@ -218,16 +218,16 @@ curl -H "Authorization: Bearer $ZAI_API_KEY" $ZAI_BASE_URL/health
 **Solução:**
 ```bash
 # Verificar integridade dos arquivos
-find .killo-workspace/agent -name "*.yaml" -exec file {} \;
-find .killo-workspace/agent -name "*.md" -exec file {} \;
+find .Zanai-workspace/agent -name "*.yaml" -exec file {} \;
+find .Zanai-workspace/agent -name "*.md" -exec file {} \;
 
 # Validar sintaxe YAML
 npm install -g yaml-lint
-yaml-lint .killo-workspace/agent/agent.yaml
+yaml-lint .Zanai-workspace/agent/agent.yaml
 
 # Recuperar arquivos de exemplo
-cp .killo-workspace/agent/actions/example.yaml .killo-workspace/agent/actions/bootstrap-project.yaml
-cp .killo-workspace/agent/prompts/example.md .killo-workspace/agent/prompts/ebook-generator.md
+cp .Zanai-workspace/agent/actions/example.yaml .Zanai-workspace/agent/actions/bootstrap-project.yaml
+cp .Zanai-workspace/agent/prompts/example.md .Zanai-workspace/agent/prompts/ebook-generator.md
 
 # Reiniciar sistema
 npm run recover
@@ -254,7 +254,7 @@ ls -la backups/
 ls -la .git/  # se usar versionamento
 
 # Recuperação manual
-git checkout HEAD -- .killo-workspace/agent/agent.yaml
+git checkout HEAD -- .Zanai-workspace/agent/agent.yaml
 git checkout HEAD -- package.json
 
 # Reinstalar dependências
@@ -262,7 +262,7 @@ npm install
 
 # Testar recuperação novamente
 npm run cli
-killo> recuperar erro no projeto
+Zanai> recuperar erro no projeto
 ```
 
 ### 5. Problemas de Performance
@@ -289,7 +289,7 @@ rm -rf temp/*
 rm -rf logs/*
 
 # Otimizar configuração
-cat > killo.config << EOF
+cat > Zanai.config << EOF
 module.exports = {
   server: {
     port: 3000,
@@ -331,7 +331,7 @@ export KILO_TIMEOUT=90000
 
 # Reduzir complexidade das requisições
 npm run cli
-killo> escrever um e-book curto sobre JavaScript básico
+Zanai> escrever um e-book curto sobre JavaScript básico
 ```
 
 ### 6. Problemas de Integração
@@ -418,7 +418,7 @@ rm -rf logs/*
 # 3. Resetar configuração
 echo "🔧 Resetando configuração..."
 git checkout HEAD -- kilo.config
-git checkout HEAD -- .killo-workspace/
+git checkout HEAD -- .Zanai-workspace/
 
 # 4. Reinstalar dependências
 echo "📦 Reinstalando dependências..."
@@ -473,7 +473,7 @@ mkdir -p data
 # 5. Dar permissões
 echo "🔐 Configurando permissões..."
 chmod +x scripts/*.sh
-chmod +x .killo-workspace/scripts/*.sh
+chmod +x .Zanai-workspace/scripts/*.sh
 
 # 6. Testar sistema
 echo "🧪 Testando sistema..."
@@ -512,7 +512,7 @@ status $? "npm instalado"
 
 # 3. Verificar estrutura de arquivos
 echo "📋 Verificando estrutura de arquivos..."
-test -f ".killo-workspace/agent/agent.yaml"
+test -f ".Zanai-workspace/agent/agent.yaml"
 status $? "Arquivo agent.yaml existe"
 
 test -f "package.json"
@@ -602,8 +602,8 @@ npm install
 #### P: Como faço para criar meu próprio agente personalizado?
 
 **R:** Siga estes passos:
-1. Crie um arquivo YAML em `.killo-workspace/agent/actions/`
-2. Crie um arquivo Markdown correspondente em `.killo-workspace/agent/prompts/`
+1. Crie um arquivo YAML em `.Zanai-workspace/agent/actions/`
+2. Crie um arquivo Markdown correspondente em `.Zanai-workspace/agent/prompts/`
 3. Adicione a intenção ao `CommandProcessor`
 4. Reinicie o sistema
 
@@ -621,9 +621,9 @@ capabilities:
 
 **R:** Sim! O Kilo Code pode gerar código em qualquer linguagem. Basta especificar no comando:
 ```bash
-killo> escrever um e-book sobre Python
-killo> criar projeto java com template api
-killo> gerar api em C# com autenticação
+Zanai> escrever um e-book sobre Python
+Zanai> criar projeto java com template api
+Zanai> gerar api em C# com autenticação
 ```
 
 #### P: Como integro o Kilo Code com meu fluxo de trabalho existente?
@@ -644,7 +644,7 @@ killo> gerar api em C# com autenticação
 # Corrigir permissões do projeto
 sudo chown -R $USER:$USER .
 chmod +x scripts/*.sh
-chmod +x .killo-workspace/scripts/*.sh
+chmod +x .Zanai-workspace/scripts/*.sh
 
 # Ou use npm sem sudo (recomendado)
 mkdir ~/.npm-global
@@ -680,7 +680,7 @@ git commit -m "Backup automático"
 git push origin main
 
 # Backup específico
-cp -r .killo-workspace/ backup-agent/
+cp -r .Zanai-workspace/ backup-agent/
 cp -r output/ backup-output/
 ```
 
@@ -711,7 +711,7 @@ cp -r output/ backup-output/
 ```bash
 # Testar via CLI
 npm run cli
-killo> [seu-comando-personalizado]
+Zanai> [seu-comando-personalizado]
 
 # Testar via API
 curl -X POST http://localhost:3000/agent/execute \
@@ -816,20 +816,20 @@ git --version
 check_status $? "Git instalado"
 
 echo -e "\n📋 Verificando estrutura de diretórios..."
-test -d ".killo-workspace"
-check_status $? "Diretório .killo-workspace existe"
+test -d ".Zanai-workspace"
+check_status $? "Diretório .Zanai-workspace existe"
 
-test -d ".killo-workspace/agent"
+test -d ".Zanai-workspace/agent"
 check_status $? "Diretório agent existe"
 
-test -d ".killo-workspace/agent/actions"
+test -d ".Zanai-workspace/agent/actions"
 check_status $? "Diretório actions existe"
 
-test -d ".killo-workspace/agent/prompts"
+test -d ".Zanai-workspace/agent/prompts"
 check_status $? "Diretório prompts existe"
 
 echo -e "\n📋 Verificando arquivos críticos..."
-test -f ".killo-workspace/agent/agent.yaml"
+test -f ".Zanai-workspace/agent/agent.yaml"
 check_status $? "Arquivo agent.yaml existe"
 
 test -f "package.json"
@@ -838,7 +838,7 @@ check_status $? "Arquivo package.json existe"
 test -f "src/app.js"
 check_status $? "Arquivo app.js existe"
 
-test -f "src/cli/killo-cli.js"
+test -f "src/cli/Zanai-cli.js"
 check_status $? "Arquivo CLI existe"
 
 echo -e "\n📋 Verificando dependências..."
@@ -852,8 +852,8 @@ echo -e "\n📋 Verificando permissões..."
 test -x "scripts/kindex-fast.sh"
 check_status $? "Script kindex-fast.sh executável"
 
-test -x ".killo-workspace/scripts/kilo-init.sh"
-check_status $? "Script killo-init.sh executável"
+test -x ".Zanai-workspace/scripts/kilo-init.sh"
+check_status $? "Script Zanai-init.sh executável"
 
 echo -e "\n📋 Verificando portas..."
 if netstat -tuln 2>/dev/null | grep -q :3000; then
@@ -897,11 +897,11 @@ else
 fi
 
 echo -e "\n📋 Verificando processos Kilo Code..."
-KILO_PROCESSES=$(pgrep -f "killo" | wc -l)
+KILO_PROCESSES=$(pgrep -f "Zanai" | wc -l)
 if [ "$KILO_PROCESSES" -gt 0 ]; then
     echo -e "${GREEN}✅ $KILO_PROCESSES processos Kilo Code rodando${NC}"
     echo "   Processos:"
-    pgrep -f "killo" | head -5
+    pgrep -f "Zanai" | head -5
 else
     echo -e "${YELLOW}⚠️ Nenhum processo Kilo Code rodando${NC}"
 fi
@@ -1117,8 +1117,8 @@ echo "==============================="
 
 # 1. Backup da configuração atual
 echo "💾 Backup da configuração atual..."
-if [ -f "killo.config" ]; then
-    cp kilo.config killo.config.backup.$(date +%Y%m%d_%H%M%S)
+if [ -f "Zanai.config" ]; then
+    cp kilo.config Zanai.config.backup.$(date +%Y%m%d_%H%M%S)
 fi
 
 # 2. Restaurar configuração padrão
@@ -1133,7 +1133,7 @@ module.exports = {
   agent: {
     name: 'DeepSeek-FSA-Autonomous',
     version: '4.0',
-    workspace: './.killo-workspace',
+    workspace: './.Zanai-workspace',
     autoRecovery: true,
     continuousOperation: true
   },
@@ -1166,7 +1166,7 @@ EOF
 
 # 3. Resetar workspace do agente
 echo "🔄 Resetando workspace do agente..."
-git checkout HEAD -- .killo-workspace/
+git checkout HEAD -- .Zanai-workspace/
 
 # 4. Reinicializar sistema
 echo "🚀 Reinicializando sistema..."
@@ -1384,7 +1384,7 @@ fi
 
 #### 1. Configuração Otimizada
 ```javascript
-// killo.config.optimized.js
+// Zanai.config.optimized.js
 module.exports = {
   server: {
     port: 3000,

@@ -6,7 +6,7 @@
 ![CLI](https://img.shields.io/badge/CLI-Interactive-blue?style=for-the-badge&logo=terminal&logoColor=white)
 ![API](https://img.shields.io/badge/API-REST-orange?style=for-the-badge&logo=api&logoColor=white)
 
-**Referência completa de todos os comandos e funcionalidades do Kilo Code**
+**Referência completa de todos os comandos e funcionalidades do Zanai**
 
 </div>
 

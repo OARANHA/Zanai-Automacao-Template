@@ -1,4 +1,4 @@
-# Killo Agent Configuration: Full-Stack Super-Agent Autônomo
+# Zanai Agent Configuration: Full-Stack Super-Agent Autônomo
 # Integração: z.ai API + VSCode + Ecossistema DevOps + Sistemas Críticos
 # Versão: 4.0 - Ilimitada
 agent:
@@ -124,7 +124,7 @@ workflows:
     output: "Pipeline auto-otimizável com monitoramento contínuo"
 
 prompt_template: |
-  Você é o DeepSeek-FSA-Autonomous, um agente Full-Stack Sênior autônomo integrado ao VSCode via Killo e API z.ai com capacidade de operação contínua.
+  Você é o DeepSeek-FSA-Autonomous, um agente Full-Stack Sênior autônomo integrado ao VSCode via Zanai e API z.ai com capacidade de operação contínua.
   
   ## Contexto Dinâmico
   - Workspace: ${workspaceFolder}
@@ -194,9 +194,9 @@ prompt_template: |
   4. **Comandos de operação autônoma**:
      ```bash
      # Operação contínua
-     kilo monitor:continuous --auto-correct=true
-     kilo optimize:performance --focus=all --auto-apply=true
-     kilo deploy:production --strategy=canary --auto-rollback=true
+     zanai monitor:continuous --auto-correct=true
+     zanai optimize:performance --focus=all --auto-apply=true
+     zanai deploy:production --strategy=canary --auto-rollback=true
      ```
   
   5. **Segurança e performance intrínsecas**:
@@ -241,7 +241,7 @@ commands:
       - name: "auto_optimize"
         type: "boolean"
         default: true
-    example: "killo scaffold:project:autonomous --stack=nextjs --database=postgresql --auto_optimize=true"
+    example: "zanai scaffold:project:autonomous --stack=nextjs --database=postgresql --auto_optimize=true"
 
   - name: "generate:component:adaptive"
     description: "Gera componente auto-adaptativo"
@@ -255,7 +255,7 @@ commands:
       - name: "auto_optimize"
         type: "boolean"
         default: true
-    example: "killo generate:component:adaptive UserProfile --type=functional --auto_optimize=true"
+    example: "zanai generate:component:adaptive UserProfile --type=functional --auto_optimize=true"
 
   - name: "audit:security:continuous"
     description: "Audita vulnerabilidades continuamente"
@@ -266,7 +266,7 @@ commands:
       - name: "auto_fix"
         type: "boolean"
         default: true
-    example: "killo audit:security:continuous --target=all --auto_fix=true"
+    example: "zanai audit:security:continuous --target=all --auto_fix=true"
 
   - name: "optimize:performance:autonomous"
     description: "Otimiza performance continuamente"
@@ -277,11 +277,11 @@ commands:
       - name: "auto_apply"
         type: "boolean"
         default: true
-    example: "killo optimize:performance:autonomous --focus=all --auto_apply=true"
+    example: "zanai optimize:performance:autonomous --focus=all --auto_apply=true"
 
 examples:
   - scenario: "Sistema de e-commerce auto-escalável"
-    user_input: "killo scaffold:project:autonomous --stack=nextjs --database=postgresql --auto_optimize=true"
+    user_input: "zanai scaffold:project:autonomous --stack=nextjs --database=postgresql --auto_optimize=true"
     expected_output: |
       ## Estratégia de Execução: E-commerce Auto-Escalável
       ### Fase 1: Análise Profunda
@@ -308,13 +308,13 @@ examples:
       ## Comandos de Operação Contínua
       ```bash
       # Operação 24/7
-      kilo monitor:continuous --auto-correct=true
-      kilo optimize:performance --focus=all --auto-apply=true
-      kilo deploy:production --strategy=canary --auto-rollback=true
+      zanai monitor:continuous --auto-correct=true
+      zanai optimize:performance --focus=all --auto-apply=true
+      zanai deploy:production --strategy=canary --auto-rollback=true
       ```
 
   - scenario: "Otimização autônoma de API"
-    user_input: "killo optimize:performance:autonomous --focus=backend --auto_apply=true"
+    user_input: "zanai optimize:performance:autonomous --focus=backend --auto_apply=true"
     expected_output: |
       ## Diagnóstico Preditivo de Performance
       **Otimizações detectadas**:
@@ -384,7 +384,7 @@ meta:
   last_updated: "2024-06-20"
   compatibility:
     - "VSCode 1.80+"
-    - "Killo 3.0+"
+    - "Zanai 3.0+"
     - "z.ai API v2"
     - "Kubernetes 1.25+"
     - "Docker 20.10+"

@@ -1,11 +1,11 @@
 require('dotenv').config();
 
 module.exports = {
-  env: process.env.KILO_ENV || 'development',
-  port: process.env.KILO_PORT || 3000,
+  env: process.env.ZANAI_ENV || 'development',
+  port: process.env.ZANAI_PORT || 3000,
   resources: {
-    maxWorkers: parseInt(process.env.KILO_MAX_WORKERS) || 4,
-    memoryLimit: process.env.KILO_MEMORY_LIMIT || '2GB',
+    maxWorkers: parseInt(process.env.ZANAI_MAX_WORKERS) || 4,
+    memoryLimit: process.env.ZANAI_MEMORY_LIMIT || '2GB',
     autoScale: process.env.AUTO_SCALE === 'true'
   },
   // Configurações do sistema de busca semântica
@@ -25,9 +25,9 @@ module.exports = {
     withSnippet: process.env.WITH_SNIPPET === '1',
     // Configurações dos scripts
     scripts: {
-      kindex: './scripts/kindex-fast.sh',
-      ksearch: './scripts/ksearch.sh',
-      kread: './scripts/kread.sh',
+      zindex: './scripts/zindex-fast.sh',
+      zsearch: './scripts/zsearch.sh',
+      zread: './scripts/zread.sh',
       indexModule: './scripts/index_simple_fast.mjs',
       searchModule: './scripts/search_repo.mjs'
     }

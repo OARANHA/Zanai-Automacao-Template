@@ -9,19 +9,19 @@
     "zindex": "bash scripts/zindex-fast.sh",
     "zsearch": "bash scripts/zsearch.sh",
     "zread": "bash scripts/zread.sh",
-    "init": "./.killo-workspace/scripts/kilo-init.sh",
-    "health-check": "node .killo-workspace/health-check/project-scanner.js",
-    "recover": "./.killo-workspace/scripts/kilo-recover.sh",
-    "bootstrap": "./.killo-workspace/scripts/kilo-bootstrap.sh",
-    "setup:auto": "node .killo-workspace/scripts/auto-setup.js",
-    "setup:project": "node .killo-workspace/scripts/project-setup.js",
-    "integrate": "node .killo-workspace/scripts/integrate-smart.js",
-    "cli": "node src/cli/killo-cli.js",
+    "init": "./.zanai-workspace/scripts/zanai-init.sh",
+    "health-check": "node .zanai-workspace/health-check/project-scanner.js",
+    "recover": "./.zanai-workspace/scripts/zanai-recover.sh",
+    "bootstrap": "./.zanai-workspace/scripts/zanai-bootstrap.sh",
+    "setup:auto": "node .zanai-workspace/scripts/auto-setup.js",
+    "setup:project": "node .zanai-workspace/scripts/project-setup.js",
+    "integrate": "node .zanai-workspace/scripts/integrate-smart.js",
+    "cli": "node src/cli/zanai-cli.js",
     "demo": "node demo-cli.js",
     "test": "jest",
     "lint": "eslint src/ scripts/",
-    "security-check": "node .killo-workspace/scripts/security-check.js",
-    "postinstall": "chmod +x scripts/*.sh && chmod +x .killo-workspace/scripts/*.sh"
+    "security-check": "node .zanai-workspace/scripts/security-check.js",
+    "postinstall": "chmod +x scripts/*.sh && chmod +x .zanai-workspace/scripts/*.sh"
   },
   "dependencies": {
     "express": "^4.18.2",
@@ -46,7 +46,7 @@
     "prettier": "^2.8.8"
   },
   "keywords": [
-    "kilo",
+    "zanai",
     "template",
     "semantic-search",
     "ai-agent",
@@ -54,7 +54,7 @@
     "non-invasive",
     "auto-setup"
   ],
-  "author": "Kilo Code Team",
+  "author": "Zanai Team",
   "license": "MIT",
   "engines": {
     "node": ">=16.0.0",
@@ -62,10 +62,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/OARANHA/Kilo-Code-Automacao-Template.git"
+    "url": "https://github.com/OARANHA/Zanai-Automacao-Template.git"
   },
   "bugs": {
-    "url": "https://github.com/OARANHA/Kilo-Code-Automacao-Template/issues"
+    "url": "https://github.com/OARANHA/Zanai-Automacao-Template/issues"
   },
-  "homepage": "https://github.com/OARANHA/Kilo-Code-Automacao-Template#readme"
+  "homepage": "https://github.com/OARANHA/Zanai-Automacao-Template#readme"
 }

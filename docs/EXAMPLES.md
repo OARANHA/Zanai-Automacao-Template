@@ -38,7 +38,7 @@ Vamos criar seu primeiro e-book usando o Kilo Code.
 npm run cli
 
 # 2. Digitar o comando
-killo> escrever um e-book sobre JavaScript para iniciantes
+Zanai> escrever um e-book sobre JavaScript para iniciantes
 
 # 3. Resultado esperado
 🚀 Kilo Code CLI - Sistema Autônomo de Desenvolvimento
@@ -100,7 +100,7 @@ Este e-book foi gerado automaticamente pelo Kilo Code, um sistema autônomo de d
 
 ---
 
-killo>
+Zanai>
 ```
 
 #### Verificar o Arquivo Gerado
@@ -124,7 +124,7 @@ Vamos criar um projeto Next.js completo com dashboard.
 npm run cli
 
 # 2. Digitar o comando
-killo> criar um projeto nextjs com dashboard
+Zanai> criar um projeto nextjs com dashboard
 
 # 3. Resultado esperado
 🔍 Processando comando: "criar um projeto nextjs com dashboard"
@@ -199,7 +199,7 @@ Vamos gerar uma API REST completa com autenticação.
 npm run cli
 
 # 2. Digitar o comando
-killo> gerar uma API REST com autenticação e banco de dados
+Zanai> gerar uma API REST com autenticação e banco de dados
 
 # 3. Resultado esperado
 🔍 Processando comando: "gerar uma API REST com autenticação e banco de dados"
@@ -292,14 +292,14 @@ Vamos simular uma falha e recuperar o sistema.
 
 ```bash
 # 1. Excluir arquivo crítico
-rm .killo-workspace/agent/agent.yaml
+rm .Zanai-workspace/agent/agent.yaml
 
 # 2. Corromper arquivo de configuração
 echo "corrupted" > package.json
 
 # 3. Tentar iniciar o sistema (vai falhar)
 npm run cli
-# Erro: Cannot find module '.killo-workspace/agent/agent.yaml'
+# Erro: Cannot find module '.Zanai-workspace/agent/agent.yaml'
 ```
 
 #### Recuperar o Sistema
@@ -309,7 +309,7 @@ npm run cli
 npm run cli
 
 # 2. Executar recuperação
-killo> recuperar erro no projeto
+Zanai> recuperar erro no projeto
 
 # 3. Resultado esperado
 🔍 Processando comando: "recuperar erro no projeto"
@@ -317,7 +317,7 @@ killo> recuperar erro no projeto
 📋 Parâmetros extraídos: { tipo_erro: "sistema", severidade: "crítico" }
 🚀 Executando intenção: error-recovery
 🔍 Falha detectada: Arquivo crítico ausente
-📁 Arquivo: .killo-workspace/agent/agent.yaml
+📁 Arquivo: .Zanai-workspace/agent/agent.yaml
 📋 Estratégia: Restaurar do backup
 ✅ Backup encontrado: backups/daily_2025-08-13_agent.yaml
 🔄 Arquivo restaurado: Validado com sucesso
@@ -333,12 +333,12 @@ killo> recuperar erro no projeto
 
 ```bash
 # Verificar se os arquivos foram restaurados
-ls -la .killo-workspace/agent/agent.yaml
+ls -la .Zanai-workspace/agent/agent.yaml
 cat package.json
 
 # Testar o sistema novamente
 npm run cli
-killo> status
+Zanai> status
 ```
 
 ### Exemplo 5: Usando a API REST
@@ -1728,7 +1728,7 @@ on:
     branches: [ main ]
 
 jobs:
-  killo-code-tasks:
+  Zanai-code-tasks:
     runs-on: ubuntu-latest
     
     steps:
@@ -1755,7 +1755,7 @@ jobs:
     - name: Upload artifacts
       uses: actions/upload-artifact@v3
       with:
-        name: killo-code-output
+        name: Zanai-code-output
         path: output/
 ```
 
@@ -1780,7 +1780,7 @@ COPY . .
 RUN mkdir -p output logs temp data
 
 # Set permissions
-RUN chmod +x scripts/*.sh .killo-workspace/scripts/*.sh
+RUN chmod +x scripts/*.sh .Zanai-workspace/scripts/*.sh
 
 # Expose port
 EXPOSE 3000
@@ -1967,7 +1967,7 @@ check_disk() {
 
 # Verificar processos do Kilo Code
 check_processes() {
-    local process_count=$(pgrep -f "node.*killo" | wc -l)
+    local process_count=$(pgrep -f "node.*Zanai" | wc -l)
     log "⚙️ Processos Kilo Code: $process_count"
     
     if [ "$process_count" -eq 0 ]; then
@@ -2089,17 +2089,17 @@ rm -rf node_modules package-lock.json
 npm install
 
 # 3. Verificar arquivos críticos
-ls -la .killo-workspace/agent/agent.yaml
+ls -la .Zanai-workspace/agent/agent.yaml
 ls -la src/app.js
 ls -la package.json
 
 # 4. Executar recuperação
 npm run cli
-killo> recuperar erro no projeto
+Zanai> recuperar erro no projeto
 
 # 5. Verificar permissões
 chmod +x scripts/*.sh
-chmod +x .killo-workspace/scripts/*.sh
+chmod +x .Zanai-workspace/scripts/*.sh
 ```
 
 ### Problema 2: Comandos Não Funcionam
@@ -2114,18 +2114,18 @@ chmod +x .killo-workspace/scripts/*.sh
 ```bash
 # 1. Verificar status do sistema
 npm run cli
-killo> status
+Zanai> status
 
 # 2. Verificar se actions e prompts estão carregados
-ls -la .killo-workspace/agent/actions/
-ls -la .killo-workspace/agent/prompts/
+ls -la .Zanai-workspace/agent/actions/
+ls -la .Zanai-workspace/agent/prompts/
 
 # 3. Recarregar configuração
 npm run init
 
 # 4. Testar com comandos simples
-killo> ajuda
-killo> status
+Zanai> ajuda
+Zanai> status
 
 # 5. Verificar logs
 tail -f logs/kilo.log
@@ -2153,8 +2153,8 @@ rm -rf temp/*
 npm run recover
 
 # 4. Otimizar configuração
-# Editar killo.config para reduzir timeouts
-nano killo.config
+# Editar Zanai.config para reduzir timeouts
+nano Zanai.config
 
 # 5. Verificar se há processos zombies
 ps aux | grep kilo
@@ -2185,7 +2185,7 @@ df -h
 
 # 4. Testar com um comando simples
 npm run cli
-killo> escrever um e-book sobre teste
+Zanai> escrever um e-book sobre teste
 
 # 5. Verificar logs de erro
 tail -f logs/kilo.log
@@ -2253,7 +2253,7 @@ Você pode personalizar os prompts para obter melhores resultados:
 
 ```markdown
 # Exemplo de prompt personalizado
-# .killo-workspace/agent/prompts/custom-generator.md
+# .Zanai-workspace/agent/prompts/custom-generator.md
 
 # Custom Generator - Especialista em [Sua Especialidade]
 

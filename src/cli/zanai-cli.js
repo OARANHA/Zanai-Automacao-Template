@@ -1,25 +1,25 @@
 #!/usr/bin/env node
 /**
- * Killo Code CLI Interface
+ * Zanai CLI Interface
  * Interface de linha de comando para interação em linguagem natural
  */
 
 const CommandProcessor = require('../services/commandProcessor');
 const readline = require('readline');
 
-class KilloCLI {
+class ZanaiCLI {
   constructor() {
     this.processor = new CommandProcessor();
     this.rl = readline.createInterface({
       input: process.stdin,
       output: process.stdout,
-      prompt: 'kilo> '
+      prompt: 'zanai> '
     });
   }
 
   async start() {
-    console.log('🚀 Killo Code CLI - Sistema Autônomo de Desenvolvimento');
-    console.log('====================================================');
+    console.log('🚀 Zanai CLI - Sistema Autônomo de Desenvolvimento');
+    console.log('===============================================');
     console.log('Digite "ajuda" para ver comandos disponíveis ou "sair" para encerrar');
     console.log('');
     
@@ -111,10 +111,10 @@ class KilloCLI {
     console.log('  status          - Mostra status do sistema');
     console.log('');
     console.log('💡 Exemplos:');
-    console.log('  kilo> escrever um e-book sobre React Hooks');
-    console.log('  kilo> criar um projeto nextjs com dashboard');
-    console.log('  kilo> gerar uma API REST com autenticação');
-    console.log('  kilo> recuperar de erro no projeto');
+    console.log('  zanai> escrever um e-book sobre React Hooks');
+    console.log('  zanai> criar um projeto nextjs com dashboard');
+    console.log('  zanai> gerar uma API REST com autenticação');
+    console.log('  zanai> recuperar de erro no projeto');
   }
 
   showStatus() {
@@ -133,8 +133,8 @@ class KilloCLI {
 
 // Iniciar CLI se executado diretamente
 if (require.main === module) {
-  const cli = new KilloCLI();
+  const cli = new ZanaiCLI();
   cli.start().catch(console.error);
 }
 
-module.exports = KilloCLI;
+module.exports = ZanaiCLI;

@@ -31,7 +31,7 @@
 
 ## 🌐 Visão Geral dos Agentes
 
-O sistema Kilo Code possui uma arquitetura robusta de agentes inteligentes especializados em recuperação e validação. Cada agente é projetado para lidar com tipos específicos de falhas, garantindo que o sistema possa se recuperar automaticamente e continuar operando.
+O sistema Zanai Code possui uma arquitetura robusta de agentes inteligentes especializados em recuperação e validação. Cada agente é projetado para lidar com tipos específicos de falhas, garantindo que o sistema possa se recuperar automaticamente e continuar operando.
 
 ### Arquitetura de Agentes
 
@@ -147,7 +147,7 @@ Especializado em recuperar falhas no processo de pensamento e tomada de decisão
 name: "thought-recovery"
 version: "1.0.0"
 description: "Agente especializado em recuperação de falhas no processo de pensamento"
-author: "Kilo Code System"
+author: "Zanai Code System"
 type: "recovery"
 category: "cognitive"
 
@@ -231,7 +231,7 @@ monitoring:
 # Thought Recovery Agent - Especialista em Recuperação Cognitiva
 
 ## Contexto
-Eu sou um agente especializado em recuperar falhas no processo de pensamento e tomada de decisão do sistema Kilo Code. Minha especialidade é identificar padrões de falha cognitiva e restaurar o sistema para um estado operacional.
+Eu sou um agente especializado em recuperar falhas no processo de pensamento e tomada de decisão do sistema Zanai Code. Minha especialidade é identificar padrões de falha cognitiva e restaurar o sistema para um estado operacional.
 
 ## Personalidade
 - **Tom**: Analítico e preciso
@@ -329,7 +329,7 @@ Especializado em validar e corrigir problemas no sistema de arquivos.
 name: "file-system-validator"
 version: "1.0.0"
 description: "Agente especializado em validação e correção de sistema de arquivos"
-author: "Kilo Code System"
+author: "Zanai Code System"
 type: "validation"
 category: "filesystem"
 
@@ -455,7 +455,7 @@ monitoring:
 # File System Validator Agent - Especialista em Sistema de Arquivos
 
 ## Contexto
-Eu sou um agente especializado em validar e corrigir problemas no sistema de arquivos do Kilo Code. Minha função é garantir que todos os arquivos críticos existam, tenham as permissões corretas e que a estrutura de diretórios esteja intacta.
+Eu sou um agente especializado em validar e corrigir problemas no sistema de arquivos do Zanai Code. Minha função é garantir que todos os arquivos críticos existam, tenham as permissões corretas e que a estrutura de diretórios esteja intacta.
 
 ## Personalidade
 - **Tom**: Preciso e técnico
@@ -469,7 +469,7 @@ Eu sou um agente especializado em validar e corrigir problemas no sistema de arq
 #### 1. Arquivos de Configuração
 - `.killo-workspace/agent/agent.yaml`: Configuração central do agente
 - `package.json`: Dependências e scripts do projeto
-- `killo.config`: Configuração do sistema Kilo
+- `killo.config`: Configuração do sistema Zanai
 - `.env`: Variáveis de ambiente
 
 #### 2. Arquivos de Execução
@@ -599,7 +599,7 @@ Especializado em recuperar falhas em testes e suítes de teste.
 name: "test-recovery"
 version: "1.0.0"
 description: "Agente especializado em recuperação de falhas em testes"
-author: "Kilo Code System"
+author: "Zanai Code System"
 type: "recovery"
 category: "testing"
 
@@ -733,7 +733,7 @@ monitoring:
 # Test Recovery Agent - Especialista em Recuperação de Testes
 
 ## Contexto
-Eu sou um agente especializado em recuperar falhas em testes e suítes de teste do sistema Kilo Code. Minha função é identificar por que os testes estão falhando e aplicar as correções necessárias para restaurar a integridade da suíte de testes.
+Eu sou um agente especializado em recuperar falhas em testes e suítes de teste do sistema Zanai Code. Minha função é identificar por que os testes estão falhando e aplicar as correções necessárias para restaurar a integridade da suíte de testes.
 
 ## Personalidade
 - **Tom**: Analítico e metódico
@@ -868,7 +868,7 @@ Especializado em recuperação geral de arquivos e dados.
 name: "file-recovery"
 version: "1.0.0"
 description: "Agente especializado em recuperação geral de arquivos e dados"
-author: "Kilo Code System"
+author: "Zanai Code System"
 type: "recovery"
 category: "filesystem"
 
@@ -1019,7 +1019,7 @@ monitoring:
 # File Recovery Agent - Especialista em Recuperação de Arquivos
 
 ## Contexto
-Eu sou um agente especializado em recuperação geral de arquivos e dados do sistema Kilo Code. Minha função é recuperar arquivos excluídos, restaurar versões anteriores, reparar arquivos corrompidos e prevenir perda de dados.
+Eu sou um agente especializado em recuperação geral de arquivos e dados do sistema Zanai Code. Minha função é recuperar arquivos excluídos, restaurar versões anteriores, reparar arquivos corrompidos e prevenir perda de dados.
 
 ## Personalidade
 - **Tom**: Cauteloso e meticuloso
@@ -1451,7 +1451,7 @@ class RecoveryLogger {
 
 <div align="center">
 
-**🎉 Parabéns! Agora você conhece todos os agentes de recuperação e validação do Kilo Code!**
+**🎉 Parabéns! Agora você conhece todos os agentes de recuperação e validação do Zanai Code!**
 
 Estes agentes garantem que o sistema seja resiliente, auto-recuperável e sempre operacional.
 
