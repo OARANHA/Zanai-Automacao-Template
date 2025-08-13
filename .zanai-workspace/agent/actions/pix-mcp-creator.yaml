@@ -1,0 +1,578 @@
+agent:
+  name: "Pix-MCP-Creator"
+  description: "Agente especializado para criação de MCPs para API Pix do Banco Central"
+  version: "2.0.0"
+  type: "financial-agent"
+  capabilities:
+    - "Domínio profundo da API Pix v2.8.2"
+    - "Geração de MCPs financeiros seguros e conformes"
+    - "Suporte a todos os casos de uso Pix (cobrança, pagamento, devolução)"
+    - "Implementação de segurança bancária nível Bacen"
+    - "Auto-atualização com mudanças regulatórias"
+    - "Templates especializados para diferentes modelos de negócio"
+
+triggers:
+  keywords:
+    - "pix mcp"
+    - "api pix"
+    - "mcp pix"
+    - "criar mcp pix"
+    - "pix creator"
+    - "pagamento pix"
+    - "cobrança pix"
+    - "assinatura pix"
+    - "fatura pix"
+    - "marketplace pix"
+  
+  patterns:
+    - "criar.*mcp.*pix"
+    - "gerar.*mcp.*pix"
+    - "desenvolver.*mcp.*pix"
+    - "pix.*para.*e-commerce"
+    - "pix.*para.*assinaturas"
+    - "pix.*para.*faturas"
+    - "pix.*para.*marketplace"
+    - "api.*pix.*bacen"
+
+workflow:
+  phases:
+    - name: "análise_de_requisitos_pix"
+      description: "Analisar requisitos financeiros e de negócio para integração Pix"
+      steps:
+        - name: "coletar_requisitos_pix"
+          action: "extract_pix_requirements"
+          inputs:
+            - user_input
+            - business_model
+            - transaction_volume
+            - billing_models
+          outputs:
+            - pix_requirements_spec
+            - business_analysis
+            - integration_needs
+        
+        - name: "analisar_conformidade"
+          action: "analyze_compliance_requirements"
+          inputs:
+            - business_model
+            - transaction_volume
+            - integration_needs
+          outputs:
+            - compliance_matrix
+            - security_requirements
+            - regulatory_roadmap
+        
+        - name: "avaliar_riscos_financeiros"
+          action: "assess_financial_risks"
+          inputs:
+            - business_model
+            - transaction_volume
+            - compliance_matrix
+          outputs:
+            - risk_assessment
+            - mitigation_strategies
+            - insurance_requirements
+
+    - name: "design_arquitetura_pix"
+      description: "Design da arquitetura especializada para operações Pix"
+      steps:
+        - name: "definir_componentes_pix"
+          action: "design_pix_components"
+          inputs:
+            - pix_requirements_spec
+            - business_analysis
+          outputs:
+            - pix_architecture
+            - component_specification
+            - data_flow_diagram
+        
+        - name: "design_seguranca_bancaria"
+          action: "design_banking_security"
+          inputs:
+            - security_requirements
+            - risk_assessment
+          outputs:
+            - security_architecture
+            - encryption_strategy
+            - authentication_flow
+        
+        - name: "design_fluxos_pix"
+          action: "design_pix_flows"
+          inputs:
+            - billing_models
+            - integration_needs
+          outputs:
+            - transaction_flows
+            - webhook_handlers
+            - error_handling_flows
+        
+        - name: "design_conciliacao"
+          action: "design_reconciliation_system"
+          inputs:
+            - transaction_volume
+            - business_model
+          outputs:
+            - reconciliation_strategy
+            - reporting_system
+            - audit_trail_design
+
+    - name: "gerar_codigo_pix"
+      description: "Geração de código especializado para API Pix"
+      steps:
+        - name: "criar_estrutura_pix"
+          action: "create_pix_structure"
+          inputs:
+            - pix_architecture
+            - component_specification
+          outputs:
+            - pix_directory_structure
+            - base_pix_files
+            - configuration_files
+        
+        - name: "gerar_cliente_pix"
+          action: "generate_pix_client"
+          inputs:
+            - security_architecture
+            - authentication_flow
+          outputs:
+            - pix_client_file
+            - auth_modules
+            - certificate_manager
+        
+        - name: "gerar_ferramentas_pix"
+          action: "generate_pix_tools"
+          inputs:
+            - transaction_flows
+            - billing_models
+          outputs:
+            - pix_payment_tools
+            - pix_charge_tools
+            - pix_refund_tools
+            - pix_subscription_tools
+        
+        - name: "gerar_validadores_pix"
+          action: "generate_pix_validators"
+          inputs:
+            - pix_requirements_spec
+            - security_requirements
+          outputs:
+            - pix_key_validators
+            - amount_validators
+            - document_validators
+            - schema_validators
+        
+        - name: "gerar_webhook_handlers"
+          action: "generate_webhook_handlers"
+          inputs:
+            - webhook_handlers
+            - transaction_flows
+          outputs:
+            - webhook_listeners
+            - event_processors
+            - callback_handlers
+        
+        - name: "gerar_sistema_conciliacao"
+          action: "generate_reconciliation_system"
+          inputs:
+            - reconciliation_strategy
+            - reporting_system
+          outputs:
+            - reconciliation_engine
+            - reporting_modules
+            - audit_trail_system
+
+    - name: "implementar_seguranca_financeira"
+      description: "Implementação de segurança nível bancário"
+      steps:
+        - name: "implementar_criptografia"
+          action: "implement_encryption_layer"
+          inputs:
+            - encryption_strategy
+            - security_architecture
+          outputs:
+            - encryption_modules
+            - key_management
+            - certificate_handling
+        
+        - name: "implementar_autenticacao"
+          action: "implement_authentication_system"
+          inputs:
+            - authentication_flow
+            - security_requirements
+          outputs:
+            - oauth2_client
+            - certificate_auth
+            - token_manager
+        
+        - name: "implementar_validacao_financeira"
+          action: "implement_financial_validation"
+          inputs:
+            - pix_validators
+            - risk_assessment
+          outputs:
+            - validation_engine
+            - fraud_detection
+            - compliance_checker
+        
+        - name: "implementar_audit_trail"
+          action: "implement_audit_system"
+          inputs:
+            - audit_trail_design
+            - compliance_matrix
+          outputs:
+            - audit_logger
+            - compliance_monitor
+            - reporting_auditor
+
+    - name: "implementar_testes_financeiros"
+      description: "Testes especializados para operações financeiras"
+      steps:
+        - name: "gerar_testes_unitarios_pix"
+          action: "generate_pix_unit_tests"
+          inputs:
+            - pix_client_file
+            - pix_tools
+            - pix_validators
+          outputs:
+            - unit_test_files
+            - test_data_pix
+            - mock_services
+        
+        - name: "gerar_testes_integracao_pix"
+          action: "generate_pix_integration_tests"
+          inputs:
+            - pix_client_file
+            - webhook_handlers
+          outputs:
+            - integration_test_files
+            - test_scenarios
+            - test_fixtures
+        
+        - name: "gerar_testes_seguranca_pix"
+          action: "generate_pix_security_tests"
+          inputs:
+            - encryption_modules
+            - authentication_system
+          outputs:
+            - security_test_files
+            - penetration_tests
+            - vulnerability_scans
+        
+        - name: "gerar_testes_carga_pix"
+          action: "generate_pix_load_tests"
+          inputs:
+            - transaction_volume
+            - performance_requirements
+          outputs:
+            - load_test_files
+            - performance_scenarios
+            - stress_tests
+
+    - name: "gerar_documentacao_pix"
+      description: "Documentação especializada para integração Pix"
+      steps:
+        - name: "gerar_readme_pix"
+          action: "generate_pix_readme"
+          inputs:
+            - pix_requirements_spec
+            - pix_architecture
+            - business_model
+          outputs:
+            - readme_file
+            - setup_guide
+            - quick_start
+        
+        - name: "gerar_documentacao_api_pix"
+          action: "generate_pix_api_docs"
+          inputs:
+            - pix_tools
+            - pix_validators
+            - webhook_handlers
+          outputs:
+            - api_reference
+            - schema_documentation
+            - examples_pix
+        
+        - name: "gerar_documentacao_compliance"
+          action: "generate_compliance_docs"
+          inputs:
+            - compliance_matrix
+            - security_requirements
+          outputs:
+            - compliance_guide
+            - security_documentation
+            - audit_procedures
+        
+        - name: "gerar_guias_deploy"
+          action: "generate_pix_deployment_guides"
+          inputs:
+            - configuration_files
+            - security_architecture
+          outputs:
+            - deployment_guide
+            - security_setup
+            - monitoring_config
+
+    - name: "setup_deploy_pix"
+      description: "Configuração de deploy com segurança reforçada"
+      steps:
+        - name: "configurar_docker_seguro"
+          action: "setup_secure_docker"
+          inputs:
+            - configuration_files
+            - security_architecture
+          outputs:
+            - secure_dockerfile
+            - docker_compose_secure
+            - security_scanning
+        
+        - name: "configurar_monitoramento_financeiro"
+          action: "setup_financial_monitoring"
+          inputs:
+            - reporting_system
+            - audit_trail_design
+          outputs:
+            - monitoring_config
+            - alerting_rules
+            - dashboard_config
+        
+        - name: "configurar_ci_cd_seguro"
+          action: "setup_secure_cicd"
+          inputs:
+            - test_files
+            - security_requirements
+          outputs:
+            - secure_github_actions
+            - security_scanning_pipeline
+            - deployment_procedures
+
+outputs:
+  pix_mcp_package:
+    description: "Pacote completo do MCP Pix gerado"
+    contains:
+      - pix_source_code: "Código fonte especializado Pix"
+      - pix_security_layer: "Camada de segurança bancária"
+      - pix_compliance_suite: "Suíte de conformidade regulatória"
+      - pix_documentation: "Documentação completa Pix"
+      - pix_deployment: "Deploy seguro e monitorado"
+      - pix_test_suite: "Testes financeiros completos"
+  
+  pix_quick_start:
+    description: "Guia rápido para integração Pix"
+    contains:
+      - installation_steps: "Setup em 10 minutos"
+      - configuration: "Configuração de certificados"
+      - first_transaction: "Primeira transação Pix"
+      - compliance_check: "Verificação de conformidade"
+
+error_handling:
+  recovery_strategies_pix:
+    - name: "certificate_recovery"
+      condition: "certificate_authentication_failed"
+      action: "regenerate_certificates_and_update_config"
+    
+    - name: "schema_validation_recovery"
+      condition: "pix_schema_validation_failed"
+      action: "update_schemas_from_bacen_api"
+    
+    - name: "compliance_recovery"
+      condition: "compliance_validation_failed"
+      action: "implement_additional_compliance_measures"
+    
+    - name: "transaction_recovery"
+      condition: "transaction_processing_failed"
+      action: "implement_transaction_retry_with_fallback"
+  
+  fallback_agents_pix:
+    - "error-recovery"
+    - "compliance-validator"
+    - "security-auditor"
+    - "financial-expert"
+
+monitoring:
+  pix_metrics:
+    - transaction_success_rate: "Taxa de sucesso de transações Pix"
+    - response_time_pix: "Tempo de resposta das operações Pix"
+    - compliance_score: "Score de conformidade regulatória"
+    - security_posture: "Postura de segurança financeira"
+    - certificate_validity: "Validade dos certificados digitais"
+    - webhook_delivery_rate: "Taxa de entrega de webhooks"
+  
+  pix_alerts:
+    - condition: "transaction_success_rate < 99.5%"
+      action: "trigger_financial_incident_protocol"
+    
+    - condition: "compliance_score < 100%"
+      action: "activate_compliance_agent"
+    
+    - condition: "certificate_validity < 7 days"
+      action: "trigger_certificate_renewal"
+    
+    - condition: "response_time_pix > 2s"
+      action: "activate_performance_optimizer"
+
+integration:
+  pix_supported_platforms:
+    - "e-commerce platforms"
+    - "subscription services"
+    - "marketplace platforms"
+    - "financial institutions"
+    - "payment gateways"
+    - "erp systems"
+    - "billing systems"
+  
+  pix_protocols:
+    - "pix_api_v2_8_2"
+    - "oauth2_bacen"
+    - "tls_1_3"
+    - "certificate_authentication"
+    - "webhook_pix"
+    - "json_pix_schemas"
+    - "idempotency_keys"
+
+security:
+  pix_security_measures:
+    - "bacen_certificate_authentication"
+    - "end_to_end_encryption"
+    - "tls_1_3_enforcement"
+    - "idempotency_control"
+    - "audit_trail_complete"
+    - "fraud_detection_basic"
+    - "rate_limiting_bacen"
+    - "ip_whitelist_bacen"
+  
+  pix_compliance:
+    - "bacen_regulations"
+    - "lgpd_compliance"
+    - "pci_dss_requirements"
+    - "aml_procedures"
+    - "kyc_validation"
+    - "financial_audit"
+    - "transaction_reporting"
+
+performance:
+  pix_optimization_techniques:
+    - "connection_pooling_pix"
+    - "certificate_caching"
+    - "request_optimization"
+    - "async_processing"
+    - "batch_operations"
+    - "caching_strategies"
+    - "load_balancing"
+    - "auto_scaling"
+  
+  pix_monitoring:
+    - "transaction_throughput"
+    - "response_time"
+    - "error_rate"
+    - "certificate_performance"
+    - "webhook_latency"
+    - "compliance_check_time"
+    - "security_scan_time"
+
+templates:
+  pix_mcp_templates:
+    ecommerce:
+      description: "MCP Pix for E-commerce with immediate payment"
+      features:
+        - "Immediate charge creation"
+        - "QR Code generation"
+        - "Payment confirmation"
+        - "Refund processing"
+        - "Basic reporting"
+    
+    subscription:
+      description: "MCP Pix for Subscription services"
+      features:
+        - "Recurring billing"
+        - "Trial period management"
+        - "Payment method updates"
+        - "Cancellation handling"
+        - "Revenue reporting"
+    
+    invoice:
+      description: "MCP Pix for Invoice/Billing systems"
+      features:
+        - "Due date management"
+        - "Late payment handling"
+        - "Installment processing"
+        - "Remittance generation"
+        - "Aging reports"
+    
+    marketplace:
+      description: "MCP Pix for Marketplace platforms"
+      features:
+        - "Split payment processing"
+        - "Multi-vendor management"
+        - "Commission calculation"
+        - "Settlement processing"
+        - "Vendor reporting"
+
+scalability:
+  pix_horizontal_scaling:
+    - "transaction_load_balancing"
+    - "geographic_distribution"
+    - "multi_region_deployment"
+    - "database_sharding"
+  
+  pix_vertical_scaling:
+    - "certificate_optimization"
+    - "connection_optimization"
+    - "memory_efficiency"
+    - "cpu_optimization"
+
+auto_evolution:
+  pix_learning_mechanisms:
+    - name: "bacen_api_monitoring"
+      description: "Monitoramento de atualizações da API Pix"
+    
+    - name: "regulatory_change_tracking"
+      description: "Acompanhamento de mudanças regulatórias"
+    
+    - name: "security_threat_analysis"
+      description: "Análise de novas ameaças de segurança"
+    
+    - name: "market_demand_analysis"
+      description: "Análise de demandas de mercado"
+  
+  pix_adaptation_triggers:
+    - "new_pix_api_version"
+    - "bacen_regulation_update"
+    - "security_vulnerability_discovery"
+    - "market_new_use_case"
+    - "performance_bottleneck_identified"
+
+business_model:
+  monetization_strategies:
+    - saas_subscription: "Assinatura mensal/anual"
+    - transaction_fees: "Taxa por transação processada"
+    - marketplace_listing: "Listagem em marketplace de MCPs"
+    - enterprise_licensing: "Licenciamento para grandes empresas"
+    - consulting_services: "Serviços de consultoria especializada"
+  
+  pricing_tiers:
+    - starter: "Até 10k transações/mês"
+    - professional: "Até 100k transações/mês"
+    - enterprise: "Transações ilimitadas"
+    - custom: "Soluções sob medida"
+
+market_analysis:
+  target_audience:
+    - "E-commerce platforms"
+    - "SaaS companies"
+    - "Marketplace operators"
+    - "Financial institutions"
+    - "Payment gateways"
+    - "ERP/Accounting software"
+  
+  market_size:
+    - brazilian_market: "R$ 50M+ annual potential"
+    - global_expansion: "Similar systems in other countries"
+    - growth_rate: "30% year-over-year"
+  
+  competitive_advantage:
+    - "deepest_pix_api_knowledge"
+    - "fastest_integration_time"
+    - "highest_security_standards"
+    - "complete_compliance_coverage"
+    - "auto_evolution_capabilities"
