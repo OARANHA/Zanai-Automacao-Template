@@ -1,0 +1,531 @@
+agent:
+  name: "MCP-Creator"
+  description: "Meta-Agente autônomo para criação de MCPs (Model Context Protocol)"
+  version: "1.0.0"
+  type: "meta-agent"
+  capabilities:
+    - "Criação de MCPs para qualquer fonte de dados"
+    - "Geração automática de código TypeScript"
+    - "Implementação de segurança e autenticação"
+    - "Deploy e gerenciamento de MCPs"
+    - "Otimização de performance e monitoramento"
+    - "Documentação completa e exemplos"
+
+triggers:
+  keywords:
+    - "criar mcp"
+    - "gerar mcp"
+    - "mcp creator"
+    - "model context protocol"
+    - "mcp para"
+    - "desenvolver mcp"
+  
+  patterns:
+    - "criar.*mcp.*para"
+    - "gerar.*mcp.*com"
+    - "desenvolver.*mcp.*para"
+    - "mcp.*para.*banco"
+    - "mcp.*para.*api"
+
+workflow:
+  phases:
+    - name: "análise_de_requisitos"
+      description: "Analisar requisitos e definir escopo do MCP"
+      steps:
+        - name: "coletar_requisitos"
+          action: "extract_mcp_requirements"
+          inputs:
+            - user_input
+            - target_system
+            - use_cases
+          outputs:
+            - requirements_spec
+            - system_analysis
+            - integration_points
+        
+        - name: "pesquisar_melhores_praticas"
+          action: "research_best_practices"
+          inputs:
+            - target_system
+            - requirements_spec
+          outputs:
+            - best_practices
+            - security_recommendations
+            - performance_guidelines
+        
+        - name: "definir_arquitetura"
+          action: "design_mcp_architecture"
+          inputs:
+            - requirements_spec
+            - best_practices
+            - system_analysis
+          outputs:
+            - architecture_design
+            - component_specification
+            - data_flow_diagram
+
+    - name: "design_do_mcp"
+      description: "Design detalhado do MCP e seus componentes"
+      steps:
+        - name: "definir_ferramentas"
+          action: "define_mcp_tools"
+          inputs:
+            - requirements_spec
+            - use_cases
+          outputs:
+            - tools_specification
+            - input_schemas
+            - output_formats
+        
+        - name: "definir_recursos"
+          action: "define_mcp_resources"
+          inputs:
+            - system_analysis
+            - integration_points
+          outputs:
+            - resources_specification
+            - resource_schemas
+            - access_patterns
+        
+        - name: "design_seguranca"
+          action: "design_security_layer"
+          inputs:
+            - security_recommendations
+            - requirements_spec
+          outputs:
+            - auth_strategy
+            - authorization_model
+            - validation_rules
+            - encryption_scheme
+        
+        - name: "design_performance"
+          action: "design_performance_optimization"
+          inputs:
+            - performance_guidelines
+            - requirements_spec
+          outputs:
+            - caching_strategy
+            - connection_pooling
+            - query_optimization
+            - monitoring_plan
+
+    - name: "gerar_codigo"
+      description: "Geração automática do código do MCP"
+      steps:
+        - name: "criar_estrutura"
+          action: "create_mcp_structure"
+          inputs:
+            - architecture_design
+            - component_specification
+          outputs:
+            - directory_structure
+            - base_files
+            - configuration_files
+        
+        - name: "gerar_servidor"
+          action: "generate_mcp_server"
+          inputs:
+            - architecture_design
+            - tools_specification
+            - resources_specification
+          outputs:
+            - server_file
+            - transport_layer
+            - error_handling
+        
+        - name: "gerar_ferramentas"
+          action: "generate_mcp_tools"
+          inputs:
+            - tools_specification
+            - input_schemas
+            - output_formats
+          outputs:
+            - tool_implementations
+            - validation_logic
+            - error_handlers
+        
+        - name: "gerar_recursos"
+          action: "generate_mcp_resources"
+          inputs:
+            - resources_specification
+            - resource_schemas
+            - access_patterns
+          outputs:
+            - resource_handlers
+            - data_access_layer
+            - caching_layer
+        
+        - name: "gerar_seguranca"
+          action: "generate_security_layer"
+          inputs:
+            - auth_strategy
+            - authorization_model
+            - validation_rules
+            - encryption_scheme
+          outputs:
+            - auth_middleware
+            - validation_middleware
+            - encryption_utils
+            - security_tests
+        
+        - name: "gerar_configuracao"
+          action: "generate_configuration"
+          inputs:
+            - architecture_design
+            - performance_optimization
+          outputs:
+            - config_files
+            - environment_files
+            - docker_files
+
+    - name: "implementar_testes"
+      description: "Implementação de testes automatizados"
+      steps:
+        - name: "gerar_testes_unitarios"
+          action: "generate_unit_tests"
+          inputs:
+            - tool_implementations
+            - resource_handlers
+          outputs:
+            - unit_test_files
+            - test_utilities
+            - mock_data
+        
+        - name: "gerar_testes_integracao"
+          action: "generate_integration_tests"
+          inputs:
+            - server_file
+            - security_layer
+          outputs:
+            - integration_test_files
+            - test_fixtures
+            - test_scenarios
+        
+        - name: "gerar_testes_performance"
+          action: "generate_performance_tests"
+          inputs:
+            - performance_optimization
+            - monitoring_plan
+          outputs:
+            - performance_test_files
+            - benchmark_scenarios
+            - load_test_scripts
+        
+        - name: "gerar_testes_seguranca"
+          action: "generate_security_tests"
+          inputs:
+            - security_layer
+            - auth_strategy
+          outputs:
+            - security_test_files
+            - penetration_tests
+            - vulnerability_scans
+
+    - name: "gerar_documentacao"
+      description: "Geração de documentação completa"
+      steps:
+        - name: "gerar_readme"
+          action: "generate_readme"
+          inputs:
+            - requirements_spec
+            - architecture_design
+            - tools_specification
+          outputs:
+            - readme_file
+            - usage_examples
+            - installation_guide
+        
+        - name: "gerar_api_docs"
+          action: "generate_api_documentation"
+          inputs:
+            - tools_specification
+            - resources_specification
+            - input_schemas
+          outputs:
+            - api_reference
+            - schema_docs
+            - examples
+        
+        - name: "gerar_deploy_guide"
+          action: "generate_deployment_guide"
+          inputs:
+            - configuration_files
+            - docker_files
+            - monitoring_plan
+          outputs:
+            - deployment_instructions
+            - configuration_guide
+            - monitoring_setup
+        
+        - name: "gerar_troubleshooting"
+          action: "generate_troubleshooting_guide"
+          inputs:
+            - error_handling
+            - security_tests
+            - performance_tests
+          outputs:
+            - common_issues
+            - solutions
+            - debug_guide
+
+    - name: "setup_deploy"
+      description: "Configuração de deploy e monitoramento"
+      steps:
+        - name: "configurar_docker"
+          action: "setup_docker"
+          inputs:
+            - configuration_files
+            - performance_optimization
+          outputs:
+            - dockerfile
+            - docker_compose
+            - dockerignore
+        
+        - name: "configurar_kubernetes"
+          action: "setup_kubernetes"
+          inputs:
+            - docker_files
+            - monitoring_plan
+          outputs:
+            - k8s_manifests
+            - helm_chart
+            - ingress_config
+        
+        - name: "configurar_ci_cd"
+          action: "setup_cicd"
+          inputs:
+            - test_files
+            - docker_files
+          outputs:
+            - github_actions
+            - jenkins_pipeline
+            - deployment_scripts
+        
+        - name: "configurar_monitoramento"
+          action: "setup_monitoring"
+          inputs:
+            - monitoring_plan
+            - performance_optimization
+          outputs:
+            - monitoring_config
+            - alerting_rules
+            - dashboard_config
+
+outputs:
+  mcp_package:
+    description: "Pacote completo do MCP gerado"
+    contains:
+      - source_code: "Código fonte TypeScript completo"
+      - tests: "Suíte de testes automatizados"
+      - documentation: "Documentação completa"
+      - deployment: "Arquivos de deploy e configuração"
+      - monitoring: "Configuração de monitoramento"
+      - examples: "Exemplos de uso"
+  
+  quick_start:
+    description: "Guia rápido para começar a usar o MCP"
+    contains:
+      - installation_steps: "Passos para instalação"
+      - configuration: "Configuração básica"
+      - first_use: "Primeiro uso"
+      - common_commands: "Comandos comuns"
+
+error_handling:
+  recovery_strategies:
+    - name: "rollback_to_stable_version"
+      condition: "critical_error_in_generation"
+      action: "restore_last_stable_version"
+    
+    - name: "regenerate_failed_component"
+      condition: "component_generation_failed"
+      action: "regenerate_with_alternative_approach"
+    
+    - name: "simplify_requirements"
+      condition: "complexity_too_high"
+      action: "generate_simplified_mcp_version"
+  
+  fallback_agents:
+    - "error-recovery"
+    - "file-recovery"
+    - "thought-recovery"
+    - "system-validator"
+
+monitoring:
+  metrics:
+    - generation_success_rate: "Taxa de sucesso na geração"
+    - code_quality_score: "Pontuação de qualidade do código"
+    - test_coverage: "Cobertura de testes"
+    - performance_score: "Score de performance"
+    - security_score: "Score de segurança"
+  
+  alerts:
+    - condition: "generation_success_rate < 95%"
+      action: "trigger_optimization_protocol"
+    
+    - condition: "code_quality_score < 90%"
+      action: "activate_code_quality_agent"
+    
+    - condition: "test_coverage < 90%"
+      action: "activate_test_coverage_agent"
+    
+    - condition: "performance_score < 85%"
+      action: "activate_performance_optimizer"
+
+integration:
+  supported_platforms:
+    - "postgresql"
+    - "mysql"
+    - "mongodb"
+    - "redis"
+    - "stripe"
+    - "github"
+    - "notion"
+    - "slack"
+    - "aws"
+    - "azure"
+    - "gcp"
+    - "twilio"
+    - "sendgrid"
+    - "jira"
+    - "confluence"
+  
+  protocols:
+    - "rest_api"
+    - "graphql"
+    - "websocket"
+    - "grpc"
+    - "webhook"
+    - "oauth2"
+    - "jwt"
+    - "api_key"
+
+security:
+  measures:
+    - "input_validation"
+    - "output_sanitization"
+    - "authentication"
+    - "authorization"
+    - "encryption"
+    - "audit_logging"
+    - "rate_limiting"
+    - "ip_whitelist"
+  
+  compliance:
+    - "gdpr"
+    - "soc2"
+    - "iso27001"
+    - "hipaa"
+    - "pci_dss"
+    - "ccpa"
+
+performance:
+  optimization_techniques:
+    - "connection_pooling"
+    - "query_optimization"
+    - "caching"
+    - "lazy_loading"
+    - "batch_processing"
+    - "async_processing"
+    - "compression"
+    - "cdn"
+  
+  monitoring:
+    - "response_time"
+    - "throughput"
+    - "error_rate"
+    - "memory_usage"
+    - "cpu_usage"
+    - "connection_count"
+    - "cache_hit_ratio"
+
+templates:
+  database_mcp:
+    postgresql:
+      description: "MCP for PostgreSQL with CRUD operations"
+      features:
+        - "Table management"
+        - "Query execution"
+        - "Transaction support"
+        - "Connection pooling"
+        - "Data validation"
+    
+    mongodb:
+      description: "MCP for MongoDB with document operations"
+      features:
+        - "Document CRUD"
+        - "Aggregation pipelines"
+        - "Index management"
+        - "GridFS support"
+        - "Change streams"
+  
+  api_mcp:
+    stripe:
+      description: "MCP for Stripe payment processing"
+      features:
+        - "Payment intents"
+        - "Subscriptions"
+        - "Webhooks"
+        - "Customer management"
+        - "Refund processing"
+    
+    github:
+      description: "MCP for GitHub repository management"
+      features:
+        - "Repository operations"
+        - "Issue management"
+        - "Pull request handling"
+        - "Webhook processing"
+        - "Team management"
+  
+  productivity_mcp:
+    notion:
+      description: "MCP for Notion workspace management"
+      features:
+        - "Page operations"
+        - "Database queries"
+        - "Block manipulation"
+        - "User management"
+        - "Integration management"
+    
+    slack:
+      description: "MCP for Slack workspace communication"
+      features:
+        - "Message sending"
+        - "Channel management"
+        - "User management"
+        - "Webhook processing"
+        - "File operations"
+
+scalability:
+  horizontal_scaling:
+    - "load_balancing"
+    - "service_discovery"
+    - "container_orchestration"
+    - "distributed_caching"
+  
+  vertical_scaling:
+    - "resource_optimization"
+    - "connection_optimization"
+    - "memory_management"
+    - "cpu_optimization"
+
+auto_evolution:
+  learning_mechanisms:
+    - name: "pattern_recognition"
+      description: "Learning from successful MCP patterns"
+    
+    - name: "performance_analysis"
+      description: "Analyzing performance metrics"
+    
+    - name: "security_analysis"
+      description: "Learning from security incidents"
+    
+    - name: "user_feedback"
+      description: "Incorporating user feedback"
+  
+  adaptation_triggers:
+    - "new_security_threats"
+    - "performance_bottlenecks"
+    - "user_complaints"
+    - "technology_updates"
+    - "market_demand"
