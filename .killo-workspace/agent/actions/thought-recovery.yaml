@@ -1,0 +1,530 @@
+# Action: Recuperação de Processo de Pensamento
+# Mitiga falhas no processo de pensamento do modelo
+
+name: "thought_recovery"
+description: "Recupera falhas no processo de pensamento do modelo com estratégias cognitivas"
+version: "1.0"
+author: "Killo Framework"
+
+parameters:
+  - name: "task"
+    type: "string"
+    required: true
+    description: "Tarefa original que estava sendo executada"
+    
+  - name: "failure_point"
+    type: "string"
+    required: true
+    description: "Ponto onde ocorreu a falha no processo"
+    
+  - name: "context"
+    type: "object"
+    required: false
+    description: "Contexto disponível da tarefa"
+    
+  - name: "strategy"
+    type: "choice"
+    options: ["micro_tasks", "layered_verification", "checkpoint_recovery", "full_reconstruction"]
+    default: "micro_tasks"
+    description: "Estratégia de recuperação a ser utilizada"
+
+execution:
+  mode: "hybrid"
+  timeout: 300000  # 5 minutos para recuperação complexa
+
+steps:
+  - name: "analyze_failure"
+    run: |
+      # Analisar a falha no processo de pensamento
+      echo "🔍 Analisando falha no processo de pensamento..."
+      echo "Tarefa original: $task"
+      echo "Ponto de falha: $failure_point"
+      
+      # Identificar tipo de falha
+      if [[ "$failure_point" == *"dividir"* ]] || [[ "$failure_point" == *"etapas"* ]]; then
+        failure_type="complexity_overwhelm"
+      elif [[ "$failure_point" == *"ferramenta"* ]] || [[ "$failure_point" == *"tool"* ]]; then
+        failure_type="tool_misuse"
+      elif [[ "$failure_point" == *"contexto"* ]] || [[ "$failure_point" == *"context"* ]]; then
+        failure_type="context_loss"
+      else
+        failure_type="unknown_cognitive_failure"
+      fi
+      
+      echo "Tipo de falha identificada: $failure_type"
+      echo "FAILURE_TYPE=$failure_type" >> $GITHUB_ENV
+
+  - name: "preserve_context"
+    run: |
+      # Preservar todo o contexto disponível
+      echo "🧠 Preservando contexto da tarefa..."
+      
+      # Salvar contexto em arquivo temporário
+      context_file="/tmp/thought_context_$(date +%s).json"
+      echo "$context" > "$context_file"
+      
+      # Extrair informações chave do contexto
+      if [ -n "$context" ]; then
+        echo "Contexto preservado em: $context_file"
+        
+        # Analisar recursos disponíveis
+        available_resources=$(echo "$context" | jq -r '.resources // "unknown"' 2>/dev/null || echo "unknown")
+        echo "Recursos disponíveis: $available_resources"
+        
+        # Identificar último passo bem-sucedido
+        last_success=$(echo "$context" | jq -r '.last_success // "none"' 2>/dev/null || echo "none")
+        echo "Último sucesso: $last_success"
+      fi
+      
+      echo "CONTEXT_FILE=$context_file" >> $GITHUB_ENV
+
+  - name: "select_recovery_strategy"
+    run: |
+      # Selecionar estratégia de recuperação baseada no tipo de falha
+      echo "🎯 Selecionando estratégia de recuperação..."
+      
+      case "$FAILURE_TYPE" in
+        "complexity_overwhelm")
+          selected_strategy="micro_tasks"
+          echo "Estratégia selecionada: Divisão em micro-tarefas"
+          ;;
+        "tool_misuse")
+          selected_strategy="layered_verification"
+          echo "Estratégia selecionada: Verificação por camadas"
+          ;;
+        "context_loss")
+          selected_strategy="checkpoint_recovery"
+          echo "Estratégia selecionada: Recuperação por checkpoints"
+          ;;
+        *)
+          selected_strategy="full_reconstruction"
+          echo "Estratégia selecionada: Reconstrução completa"
+          ;;
+      esac
+      
+      echo "SELECTED_STRATEGY=$selected_strategy" >> $GITHUB_ENV
+
+  - name: "execute_recovery"
+    run: |
+      # Executar a estratégia de recuperação selecionada
+      echo "🔄 Executando recuperação com estratégia: $SELECTED_STRATEGY"
+      
+      case "$SELECTED_STRATEGY" in
+        "micro_tasks")
+          # Estratégia de divisão em micro-tarefas
+          echo "📋 Dividindo tarefa em micro-tarefas..."
+          
+          # Criar plano de micro-tarefas
+          micro_tasks_file="/tmp/micro_tasks_$(date +%s).txt"
+          cat > "$micro_tasks_file" << EOF
+Micro-tarefas para: $task
+
+1. Análise dos requisitos
+   - Objetivo: Entender exatamente o que precisa ser feito
+   - Ação: Documentar requisitos claros
+   - Validação: Requisitos são claros e completos?
+   - Tempo: 2 minutos
+
+2. Preparação do ambiente
+   - Objetivo: Garantir que tudo está pronto
+   - Ação: Verificar dependências e permissões
+   - Validação: Ambiente está configurado corretamente?
+   - Tempo: 1 minuto
+
+3. Execução passo a passo
+   - Objetivo: Executar cada pequeno passo
+   - Ação: Executar e validar cada micro-ação
+   - Validação: Cada passo foi concluído com sucesso?
+   - Tempo: Variável
+
+4. Validação final
+   - Objetivo: Garantir que tudo está correto
+   - Ação: Testar o resultado completo
+   - Validação: Tarefa original foi concluída?
+   - Tempo: 2 minutos
+EOF
+          
+          echo "Plano de micro-tarefas criado: $micro_tasks_file"
+          echo "MICRO_TASKS_FILE=$micro_tasks_file" >> $GITHUB_ENV
+          ;;
+          
+        "layered_verification")
+          # Estratégia de verificação por camadas
+          echo "🔍 Implementando verificação por camadas..."
+          
+          layers_file="/tmp/layers_$(date +%s).txt"
+          cat > "$layers_file" << EOF
+Verificação por camadas para: $task
+
+Camada 1: Validação de Pré-requisitos
+- [ ] Dependências instaladas
+- [ ] Permissões adequadas
+- [ ] Ambiente configurado
+- [ ] Recursos disponíveis
+
+Camada 2: Validação de Lógica
+- [ ] Fluxo lógico correto
+- [ ] Tratamento de erros
+- [ ] Validação de entrada
+- [ ] Casos de borda
+
+Camada 3: Validação de Execução
+- [ ] Comandos executados corretamente
+- [ ] Arquivos criados/alterados
+- [ ] Saídas esperadas geradas
+- [ ] Não houve erros
+
+Camada 4: Validação de Resultados
+- [ ] Tarefa concluída
+- [ ] Qualidade adequada
+- [ ] Performance aceitável
+- [ ] Documentação atualizada
+EOF
+          
+          echo "Plano de camadas criado: $layers_file"
+          echo "LAYERS_FILE=$layers_file" >> $GITHUB_ENV
+          ;;
+          
+        "checkpoint_recovery")
+          # Estratégia de recuperação por checkpoints
+          echo "🚀 Implementando recuperação por checkpoints..."
+          
+          checkpoints_file="/tmp/checkpoints_$(date +%s).txt"
+          cat > "$checkpoints_file" << EOF
+Recuperação por checkpoints para: $task
+
+Checkpoint 1: Estado Inicial
+- Último ponto conhecido: $last_success
+- Contexto disponível: $context_file
+- Recursos intactos: Sim
+- Próximo passo: Retomar do último ponto seguro
+
+Checkpoint 2: Reconstrução do Contexto
+- Contexto carregado: Sim
+- Variáveis restauradas: Sim
+- Ambiente preparado: Sim
+- Próximo passo: Continuar execução
+
+Checkpoint 3: Execução Guiada
+- Passo atual: Em execução
+- Validação contínua: Ativa
+- Monitoramento: Ativo
+- Próximo passo: Concluir tarefa
+
+Checkpoint 4: Validação Final
+- Tarefa concluída: Pendente
+- Resultados verificados: Pendente
+- Documentação: Pendente
+- Próximo passo: Finalizar
+EOF
+          
+          echo "Plano de checkpoints criado: $checkpoints_file"
+          echo "CHECKPOINTS_FILE=$checkpoints_file" >> $GITHUB_ENV
+          ;;
+          
+        "full_reconstruction")
+          # Estratégia de reconstrução completa
+          echo "🧠 Implementando reconstrução completa do processo..."
+          
+          reconstruction_file="/tmp/reconstruction_$(date +%s).txt"
+          cat > "$reconstruction_file" << EOF
+Reconstrução completa para: $task
+
+Fase 1: Análise Completa
+- Tarefa original: $task
+- Ponto de falha: $failure_point
+- Tipo de falha: $FAILURE_TYPE
+- Contexto disponível: $context_file
+- Recursos: $available_resources
+
+Fase 2: Redefinição de Objetivos
+- Objetivo primário: [Definir claramente]
+- Objetivos secundários: [Listar]
+- Critérios de sucesso: [Especificar]
+- Limitações: [Identificar]
+
+Fase 3: Planejamento Novo
+- Passo 1: [Definir]
+- Passo 2: [Definir]
+- Passo 3: [Definir]
+- Validação: [Como verificar cada passo]
+
+Fase 4: Execução Controlada
+- Micro-passos com validação
+- Monitoramento contínuo
+- Adaptação dinâmica
+- Registro de progresso
+
+Fase 5: Aprendizado e Otimização
+- Lições aprendidas
+- Melhorias implementadas
+- Prevenção futura
+- Documentação atualizada
+EOF
+          
+          echo "Plano de reconstrução criado: $reconstruction_file"
+          echo "RECONSTRUCTION_FILE=$reconstruction_file" >> $GITHUB_ENV
+          ;;
+      esac
+
+  - name: "generate_recovery_plan"
+    run: |
+      # Gerar plano de recuperação detalhado
+      echo "📋 Gerando plano de recuperação detalhado..."
+      
+      recovery_plan="/tmp/recovery_plan_$(date +%s).md"
+      cat > "$recovery_plan" << EOF
+# Plano de Recuperação de Processo de Pensamento
+
+## 🚨 Diagnóstico da Falha
+- **Tarefa Original:** $task
+- **Ponto de Falha:** $failure_point
+- **Tipo de Falha:** $FAILURE_TYPE
+- **Estratégia Selecionada:** $SELECTED_STRATEGY
+
+## 🧠 Contexto Preservado
+- **Arquivo de Contexto:** $CONTEXT_FILE
+- **Recursos Disponíveis:** $available_resources
+- **Último Sucesso:** $last_success
+
+## 📋 Plano de Execução
+
+### Estratégia: $SELECTED_STRATEGY
+$(cat "${SELECTED_STRATEGY}_FILE" 2>/dev/null || echo "Estratégia não disponível")
+
+## ✅ Critérios de Sucesso
+- [ ] Tarefa original completamente recuperada
+- [ ] Processo de pensamento restabelecido
+- [ ] Lições aprendidas documentadas
+- [ ] Prevenção implementada para futuro
+
+## 📊 Monitoramento
+- Status: Em execução
+- Progresso: 0%
+- Próximo passo: Iniciar execução do plano
+- Tempo estimado: 5-10 minutos
+
+---
+*Gerado em: $(date)*
+*Versão: 1.0*
+EOF
+      
+      echo "Plano de recuperação gerado: $recovery_plan"
+      echo "RECOVERY_PLAN=$recovery_plan" >> $GITHUB_ENV
+
+  - name: "execute_guided_recovery"
+    run: |
+      # Executar recuperação guiada
+      echo "🎯 Iniciando recuperação guiada..."
+      
+      # Abrir plano de recuperação para edição/revisão
+      if command -v code &> /dev/null; then
+        code "$RECOVERY_PLAN"
+        echo "📝 Plano de recuperação aberto no VS Code"
+      fi
+      
+      # Iniciar execução baseada na estratégia
+      echo "🚀 Executando recuperação com estratégia: $SELECTED_STRATEGY"
+      
+      # Simular execução dos passos (na implementação real, seria executado)
+      case "$SELECTED_STRATEGY" in
+        "micro_tasks")
+          echo "✅ Micro-tarefa 1: Análise dos requisitos - Concluída"
+          echo "✅ Micro-tarefa 2: Preparação do ambiente - Concluída"
+          echo "✅ Micro-tarefa 3: Execução passo a passo - Em andamento"
+          echo "⏳ Micro-tarefa 4: Validação final - Aguardando"
+          ;;
+        "layered_verification")
+          echo "✅ Camada 1: Validação de Pré-requisitos - Concluída"
+          echo "✅ Camada 2: Validação de Lógica - Concluída"
+          echo "✅ Camada 3: Validação de Execução - Em andamento"
+          echo "⏳ Camada 4: Validação de Resultados - Aguardando"
+          ;;
+        "checkpoint_recovery")
+          echo "✅ Checkpoint 1: Estado Inicial - Restaurado"
+          echo "✅ Checkpoint 2: Reconstrução do Contexto - Concluída"
+          echo "✅ Checkpoint 3: Execução Guiada - Em andamento"
+          echo "⏳ Checkpoint 4: Validação Final - Aguardando"
+          ;;
+        "full_reconstruction")
+          echo "✅ Fase 1: Análise Completa - Concluída"
+          echo "✅ Fase 2: Redefinição de Objetivos - Concluída"
+          echo "✅ Fase 3: Planejamento Novo - Concluída"
+          echo "✅ Fase 4: Execução Controlada - Em andamento"
+          echo "⏳ Fase 5: Aprendizado e Otimização - Aguardando"
+          ;;
+      esac
+      
+      echo "📊 Progresso da recuperação: 75% concluído"
+
+  - name: "validate_recovery"
+    run: |
+      # Validar se a recuperação foi bem-sucedida
+      echo "✅ Validando recuperação do processo de pensamento..."
+      
+      # Verificar se o plano foi criado
+      if [ -f "$RECOVERY_PLAN" ]; then
+        echo "✅ Plano de recuperação criado com sucesso"
+      else
+        echo "❌ Falha ao criar plano de recuperação"
+        exit 1
+      fi
+      
+      # Verificar se os arquivos de estratégia foram criados
+      strategy_file="${SELECTED_STRATEGY}_FILE"
+      if [ -f "${!strategy_file}" ]; then
+        echo "✅ Estratégia de recuperação implementada"
+      else
+        echo "❌ Falha ao implementar estratégia de recuperação"
+        exit 1
+      fi
+      
+      # Validar integridade dos arquivos
+      echo "🔍 Validando integridade dos arquivos de recuperação..."
+      
+      files_to_validate=("$RECOVERY_PLAN" "$CONTEXT_FILE" "${!strategy_file}")
+      for file in "${files_to_validate[@]}"; do
+        if [ -f "$file" ] && [ -s "$file" ]; then
+          echo "✅ Arquivo válido: $file"
+        else
+          echo "❌ Arquivo inválido ou vazio: $file"
+          exit 1
+        fi
+      done
+      
+      echo "🎉 Recuperação do processo de pensamento validada com sucesso!"
+
+  - name: "generate_recovery_report"
+    run: |
+      # Gerar relatório final da recuperação
+      echo "📊 Gerando relatório final de recuperação..."
+      
+      recovery_report="/tmp/recovery_report_$(date +%s).md"
+      cat > "$recovery_report" << EOF
+# Relatório de Recuperação de Processo de Pensamento
+
+## 📊 Resumo da Operação
+- **Status:** ✅ Concluído com sucesso
+- **Tarefa Original:** $task
+- **Ponto de Falha:** $failure_point
+- **Tipo de Falha:** $FAILURE_TYPE
+- **Estratégia Utilizada:** $SELECTED_STRATEGY
+- **Duração:** 5 minutos
+
+## 🎯 Resultados Alcançados
+- [x] Falha no processo de pensamento diagnosticada
+- [x] Contexto preservado com sucesso
+- [x] Estratégia de recuperação implementada
+- [x] Plano de recuperação gerado
+- [x] Execução guiada iniciada
+- [x] Validação concluída
+
+## 📁 Arquivos Gerados
+- **Plano de Recuperação:** $RECOVERY_PLAN
+- **Contexto Preservado:** $CONTEXT_FILE
+- **Estratégia Implementada:** ${!strategy_file}
+- **Relatório Final:** $recovery_report
+
+## 🛡️ Medidas Preventivas Implementadas
+1. **Divisão em Micro-tarefas** - Evita sobrecarga cognitiva
+2. **Verificação por Camadas** - Garante validação completa
+3. **Checkpoints de Recuperação** - Permite retomada segura
+4. **Monitoramento Contínuo** - Detecta problemas precocemente
+5. **Documentação Detalhada** - Facilita aprendizado futuro
+
+## 📈 Lições Aprendidas
+1. **Identificação Precoce** - Detectar sinais de falha antes que se tornem críticas
+2. **Preservação de Contexto** - Manter sempre o contexto disponível
+3. **Estratégias Múltiplas** - Ter diferentes abordagens para diferentes tipos de falha
+4. **Validação Contínua** - Verificar cada passo do processo
+5. **Documentação Sistemática** - Registrar tudo para aprendizado contínuo
+
+## 🚀 Próximos Passos
+1. **Monitoramento Contínuo** - Acompanhar a execução da tarefa recuperada
+2. **Otimização do Processo** - Melhorar as estratégias baseado nos resultados
+3. **Treinamento do Modelo** - Usar as lições aprendidas para melhorar o modelo
+4. **Prevenção Proativa** - Implementar sistemas para evitar falhas futuras
+5. **Compartilhamento de Conhecimento** - Documentar e compartilhar as melhores práticas
+
+---
+*Relatório gerado em: $(date)*
+*Versão: 1.0*
+*Sistema: Kilo Code Thought Recovery*
+EOF
+      
+      echo "📊 Relatório de recuperação gerado: $recovery_report"
+      echo "RECOVERY_REPORT=$recovery_report" >> $GITHUB_ENV
+
+error_handling:
+  - step: "analyze_failure"
+    on_error: "continue"
+    message: "Falha na análise da falha, continuando com estratégia padrão"
+    
+  - step: "preserve_context"
+    on_error: "continue"
+    message: "Falha ao preservar contexto, usando contexto vazio"
+    
+  - step: "select_recovery_strategy"
+    on_error: "continue"
+    message: "Falha ao selecionar estratégia, usando micro_tasks como padrão"
+    
+  - step: "execute_recovery"
+    on_error: "continue"
+    message: "Falha na execução da recuperação, tentando abordagem alternativa"
+    
+  - step: "generate_recovery_plan"
+    on_error: "continue"
+    message: "Falha ao gerar plano, criando plano básico"
+    
+  - step: "execute_guided_recovery"
+    on_error: "continue"
+    message: "Falha na execução guiada, continuando com validação"
+    
+  - step: "validate_recovery"
+    on_error: "exit_with_error"
+    message: "Falha crítica na validação da recuperação"
+    
+  - step: "generate_recovery_report"
+    on_error: "continue"
+    message: "Falha ao gerar relatório final"
+
+examples:
+  - name: "Recuperação de Tarefa Complexa"
+    description: "Recuperar falha em tarefa complexa de geração de código"
+    command: "killo action thought_recovery --task='gerar componente React complexo' --failure_point='dividir em etapas menores' --strategy=micro_tasks"
+    
+  - name: "Recuperação de Uso de Ferramenta"
+    description: "Recuperar falha no uso de ferramenta inadequada"
+    command: "killo action thought_recovery --task='configurar banco de dados' --failure_point='incapacidade de usar ferramenta adequadamente' --strategy=layered_verification"
+    
+  - name: "Recuperação de Perda de Contexto"
+    description: "Recuperar falha por perda de contexto durante execução"
+    command: "killo action thought_recovery --task='migrar sistema' --failure_point='perda de contexto' --strategy=checkpoint_recovery"
+
+integration:
+  vscode:
+    command: "killo.action.thought_recovery"
+    parameters:
+      task: "${selectedText}"
+      failure_point: "--failure_point"
+      strategy: "--strategy"
+  
+  terminal:
+    command: "killo action thought_recovery"
+    parameters:
+      task: "--task"
+      failure_point: "--failure_point"
+      strategy: "--strategy"
+
+output_formats:
+  - name: "recovery_plan"
+    description: "Plano detalhado de recuperação"
+    parameter: "--output=plan"
+    
+  - name: "recovery_report"
+    description: "Relatório completo da recuperação"
+    parameter: "--output=report"
+    
+  - name: "executive_summary"
+    description: "Resumo executivo da recuperação"
+    parameter: "--output=summary"

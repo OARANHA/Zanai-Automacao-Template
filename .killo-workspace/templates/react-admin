@@ -1,0 +1,157 @@
+# React Admin Template
+
+Este template cria um painel administrativo completo com React 18, Material-UI e Redux Toolkit.
+
+## Estrutura do Template
+
+```
+.
+├── package.json
+├── tsconfig.json
+├── .env.example
+├── .env
+├── public/
+│   ├── index.html
+│   ├── favicon.ico
+│   └── manifest.json
+└── src/
+    ├── index.tsx
+    ├── App.tsx
+    ├── react-app-env.d.ts
+    ├── .eslintrc.json
+    ├── .prettierrc
+    └──── assets/
+    │       └── images/
+    ├──── components/
+    │   ├── common/
+    │   │   ├── layout/
+    │   │   │   ├── AppBar.tsx
+    │   │   │   ├── Drawer.tsx
+    │   │   │   └── Footer.tsx
+    │   │   └── ui/
+    │   │       ├── Button.tsx
+    │   │       ├── DataTable.tsx
+    │   │       ├── Form.tsx
+    │   │       └── Modal.tsx
+    │   └── modules/
+    │       ├── auth/
+    │       │   ├── LoginForm.tsx
+    │       │   └── RegisterForm.tsx
+    │       ├── dashboard/
+    │       │   ├── Dashboard.tsx
+    │       │   ├── StatsCards.tsx
+    │       │   └── Charts.tsx
+    │       ├── users/
+    │       │   ├── UserList.tsx
+    │       │   ├── UserForm.tsx
+    │       │   └── UserDetail.tsx
+    │       └── products/
+    │           ├── ProductList.tsx
+    │           ├── ProductForm.tsx
+    │           └── ProductDetail.tsx
+    ├──── hooks/
+    │   ├── useAuth.ts
+    │   ├── useUsers.ts
+    │   └── useProducts.ts
+    ├──── pages/
+    │   ├── Login.tsx
+    │   ├── Register.tsx
+    │   ├── Dashboard.tsx
+    │   ├── Users.tsx
+    │   └── Products.tsx
+    ├──── routes/
+    │   ├── PrivateRoute.tsx
+    │   └── PublicRoute.tsx
+    ├──── services/
+    │   ├── api.ts
+    │   ├── authService.ts
+    │   ├── userService.ts
+    │   └── productService.ts
+    ├──── store/
+    │   ├── index.ts
+    │   ├── slices/
+    │   │   ├── authSlice.ts
+    │   │   ├── userSlice.ts
+    │   │   └── productSlice.ts
+    │   └── middleware/
+    │       └── logger.ts
+    ├──── themes/
+    │   ├── index.ts
+    │   └── palette.ts
+    ├──── types/
+    │   ├── auth.ts
+    │   ├── user.ts
+    │   ├── product.ts
+    │   └── index.ts
+    └──── utils/
+        ├── constants.ts
+        ├── helpers.ts
+        └── validators.ts
+```
+
+## Instalação
+
+```bash
+# Copiar template
+cp -r .killo-workspace/templates/react-admin meu-admin
+
+# Entrar no diretório
+cd meu-admin
+
+# Instalar dependências
+npm install
+
+# Iniciar desenvolvimento
+npm run dev
+```
+
+## Recursos
+
+- 🎨 **Material-UI**: Interface moderna e consistente
+- 📊 **Redux Toolkit**: Gerenciamento de estado eficiente
+- 🔐 **Autenticação**: Sistema de login e rotas protegidas
+- 📱 **Responsivo**: Design adaptável para todos os dispositivos
+- 📈 **Gráficos**: Chart.js para visualização de dados
+- 🔄 **CRUD Automático**: Componentes reutilizáveis para operações CRUD
+- 🎯 **TypeScript**: Suporte total para TypeScript
+- 🧪 **Testes**: Configuração para testes com Jest e React Testing Library
+
+## Comandos Disponíveis
+
+- `npm run dev` - Inicia o servidor de desenvolvimento
+- `npm run build` - Constrói o projeto para produção
+- `npm run start` - Inicia o servidor de produção
+- `npm run test` - Executa os testes
+- `npm run lint` - Executa o linter
+- `npm run eject` - Ejeta a configuração do Create React App
+
+## Rotas Principais
+
+- `/login` - Tela de login
+- `/register` - Tela de registro
+- `/dashboard` - Dashboard principal
+- `/users` - Gestão de usuários
+- `/products` - Gestão de produtos
+
+## Customização
+
+### Adicionar Novos Módulos
+1. Crie uma nova pasta em `src/components/modules/`
+2. Adicione as actions e reducers em `src/store/slices/`
+3. Crie os componentes e páginas correspondentes
+4. Adicione as rotas em `src/App.tsx`
+
+### Modificar o Tema
+Edite `src/themes/palette.ts` e `src/themes/index.ts` para personalizar cores e estilos.
+
+### Adicionar Novos Serviços
+1. Crie um novo arquivo em `src/services/`
+2. Adicione as actions correspondentes no store
+
+## Integração com Kilo
+
+Este template está otimizado para integração com o sistema Kilo:
+
+1. **Busca Semântica**: Configure a indexação automática dos componentes
+2. **Agente IA**: Use o agente para gerar novas funcionalidades
+3. **Deploy**: Pronto para deploy em Netlify, Vercel ou plataforma própria

@@ -1,0 +1,178 @@
+# Universal Starter Template
+
+Este template é uma base minimalista e flexível para qualquer tipo de projeto web, com configurações básicas mas completas.
+
+## Estrutura do Template
+
+```
+.
+├── package.json
+├── tsconfig.json
+├── .env.example
+├── .env
+├── .gitignore
+├── README.md
+├── public/
+│   ├── favicon.ico
+│   └── robots.txt
+└── src/
+    ├── index.ts
+    ├── App.tsx
+    ├── index.css
+    ├── assets/
+    │   └── images/
+    ├── components/
+    │   ├── Layout/
+    │   │   ├── Header.tsx
+    │   │   ├── Footer.tsx
+    │   │   └── Navigation.tsx
+    │   └── Common/
+    │       ├── Button.tsx
+    │       ├── Input.tsx
+    │       ├── Card.tsx
+    │       └── Modal.tsx
+    ├── hooks/
+    │   ├── useLocalStorage.ts
+    │   ├── useDebounce.ts
+    │   └── useApi.ts
+    ├── pages/
+    │   ├── Home.tsx
+    │   ├── About.tsx
+    │   └── Contact.tsx
+    ├── services/
+    │   ├── api.ts
+    │   └── config.ts
+    ├── store/
+    │   ├── index.ts
+    │   └── slices/
+    │       └── appSlice.ts
+    ├── styles/
+    │   ├── globals.css
+    │   ├── variables.css
+    │   └── components.css
+    ├── types/
+    │   └── index.ts
+    └── utils/
+        ├── helpers.ts
+        ├── constants.ts
+        └── validators.ts
+```
+
+## Instalação
+
+```bash
+# Copiar template
+cp -r .killo-workspace/templates/universal-starter meu-projeto
+
+# Entrar no diretório
+cd meu-projeto
+
+# Instalar dependências
+npm install
+
+# Iniciar desenvolvimento
+npm run dev
+```
+
+## Recursos
+
+- 🚀 **Minimalista**: Sem frameworks pesados ou opiniões forçadas
+- 🔧 **Flexível**: Configure conforme suas necessidades
+- 📦 **Pronto para Uso**: Configurações básicas já implementadas
+- 🎨 **CSS Modules**: Estilização modular e organizada
+- 🔄 **React Router**: Navegação declarativa
+- 🧪 **Testes**: Configuração básica para testes
+- 📱 **Responsivo**: Design adaptável
+- 🎯 **TypeScript**: Suporte completo para TypeScript
+
+## Comandos Disponíveis
+
+- `npm run dev` - Inicia o servidor de desenvolvimento
+- `npm run build` - Constrói o projeto para produção
+- `npm run start` - Inicia o servidor de produção
+- `npm run test` - Executa os testes
+- `npm run lint` - Executa o linter
+- `npm run type-check` - Verifica tipos do TypeScript
+
+## Estrutura de Pastas
+
+### `src/components/`
+- **Layout**: Componentes de layout (Header, Footer, Navigation)
+- **Common**: Componentes reutilizáveis (Button, Input, Card, Modal)
+
+### `src/hooks/`
+- Custom hooks para funcionalidades comuns
+- `useLocalStorage`: Gerenciamento de estado no localStorage
+- `useDebounce`: Debounce de valores
+- `useApi`: Hook para chamadas de API
+
+### `src/pages/`
+- Páginas principais do aplicativo
+- Cada página é um componente funcional
+
+### `src/services/`
+- Serviços de API e configurações
+- `api.ts`: Configuração do axios/axios
+- `config.ts`: Configurações gerais
+
+### `src/styles/`
+- Estilos organizados por módulos
+- `globals.css`: Estilos globais
+- `variables.css`: Variáveis CSS (cores, fontes, etc.)
+- `components.css`: Estilos específicos de componentes
+
+### `src/utils/`
+- Funções utilitárias
+- `helpers.ts`: Funções auxiliares
+- `constants.ts`: Constantes do aplicativo
+- `validators.ts`: Funções de validação
+
+## Customização
+
+### Adicionar Novas Páginas
+1. Crie um novo componente em `src/pages/`
+2. Adicione a rota em `src/App.tsx`
+3. Atualize o menu de navegação em `src/components/Layout/Navigation.tsx`
+
+### Modificar o Tema
+Edite `src/styles/variables.css` para alterar cores, fontes e outras variáveis de design.
+
+### Adicionar Novos Serviços
+1. Crie um novo arquivo em `src/services/`
+2. Adicione as configurações necessárias
+3. Importe e use nos componentes
+
+### Expandir o Estado
+1. Crie novos slices em `src/store/slices/`
+2. Atualize `src/store/index.ts` para registrar os reducers
+3. Use os hooks `useDispatch` e `useSelector` nos componentes
+
+## Integração com Kilo
+
+Este template está otimizado para integração com o sistema Kilo:
+
+1. **Busca Semântica**: Configure a indexação automática dos componentes
+2. **Agente IA**: Use o agente para gerar novas funcionalidades
+3. **Deploy**: Pronto para deploy em qualquer plataforma estática
+
+## Dicas de Uso
+
+### Para Projetos React
+- Instale `react-router-dom` para roteamento
+- Adicione `react-query` ou `swr` para gerenciamento de estado de servidor
+- Considere `zustand` ou `recoil` para gerenciamento de estado global
+
+### Para Projetos Next.js
+- Remova `src/index.ts` e `src/App.tsx`
+- Crie `src/pages/_app.tsx` e `src/pages/index.tsx`
+- Instale e configure `next` e `react`
+
+### Para Projetos Vue
+- Substitua os arquivos React por arquivos Vue
+- Instale `vue-router` para roteamento
+- Use `vuex` ou `pinia` para gerenciamento de estado
+
+### Para Projetos Angular
+- Substitua a estrutura React por Angular
+- Configure `@angular/router` para roteamento
+- Use `@ngrx/store` ou `NgRx` para gerenciamento de estado

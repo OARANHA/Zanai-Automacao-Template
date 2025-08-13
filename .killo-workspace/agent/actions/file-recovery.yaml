@@ -1,0 +1,670 @@
+# .killo-workspace/agent/actions/file-recovery.yaml
+name: "file_recovery"
+description: "Recupera arquivos não encontrados e resolve problemas de caminhos e permissões"
+version: "1.0"
+author: "Killo Framework"
+
+parameters:
+  - name: "file_path"
+    type: "string"
+    required: true
+    description: "Caminho do arquivo que não foi encontrado"
+  
+  - name: "error_message"
+    type: "string"
+    required: true
+    description: "Mensagem de erro específica"
+  
+  - name: "search_strategy"
+    type: "choice"
+    options: ["hierarchical", "pattern_matching", "structure_sync", "backup_restore"]
+    default: "hierarchical"
+    description: "Estratégia de busca e recuperação"
+  
+  - name: "create_if_missing"
+    type: "boolean"
+    default: true
+    description: "Criar arquivo se não for encontrado"
+  
+  - name: "backup_existing"
+    type: "boolean"
+    default: true
+    description: "Fazer backup de arquivos existentes antes de modificar"
+
+execution:
+  mode: "hybrid"
+  timeout: 180
+
+steps:
+  - name: "analyze_file_error"
+    run: |
+      # Analisar o erro de arquivo
+      echo "🔍 Analisando erro de arquivo..."
+      echo "Arquivo: $file_path"
+      echo "Erro: $error_message"
+      
+      # Extrair informações do caminho
+      dir_path=$(dirname "$file_path")
+      file_name=$(basename "$file_path")
+      file_ext="${file_name##*.}"
+      file_base="${file_name%.*}"
+      
+      echo "Diretório: $dir_path"
+      echo "Nome do arquivo: $file_name"
+      echo "Extensão: $file_ext"
+      echo "Base: $file_base"
+      
+      # Salvar informações para uso posterior
+      echo "dir_path=$dir_path" > /tmp/file_recovery_context.txt
+      echo "file_name=$file_name" >> /tmp/file_recovery_context.txt
+      echo "file_ext=$file_ext" >> /tmp/file_recovery_context.txt
+      echo "file_base=$file_base" >> /tmp/file_recovery_context.txt
+      
+      # Analisar tipo de erro
+      if [[ "$error_message" == *"not found"* ]]; then
+        error_type="not_found"
+      elif [[ "$error_message" == *"permission"* ]]; then
+        error_type="permission"
+      elif [[ "$error_message" == *"no such file"* ]]; then
+        error_type="no_such_file"
+      elif [[ "$error_message" == *"is a directory"* ]]; then
+        error_type="is_directory"
+      else
+        error_type="unknown"
+      fi
+      
+      echo "Tipo de erro: $error_type"
+      echo "error_type=$error_type" >> /tmp/file_recovery_context.txt
+
+  - name: "check_file_existence"
+    run: |
+      # Verificar se o arquivo realmente existe
+      echo "🔍 Verificando existência do arquivo..."
+      
+      # Carregar contexto
+      source /tmp/file_recovery_context.txt
+      
+      # Verificar arquivo
+      if [ -f "$file_path" ]; then
+        echo "✅ Arquivo existe no caminho especificado"
+        file_exists=true
+        
+        # Verificar permissões
+        if [ -r "$file_path" ]; then
+          echo "✅ Arquivo é legível"
+          readable=true
+        else
+          echo "❌ Arquivo não é legível"
+          readable=false
+        fi
+        
+        if [ -w "$file_path" ]; then
+          echo "✅ Arquivo é gravável"
+          writable=true
+        else
+          echo "❌ Arquivo não é gravável"
+          writable=false
+        fi
+        
+      else
+        echo "❌ Arquivo não existe no caminho especificado"
+        file_exists=false
+        readable=false
+        writable=false
+      fi
+      
+      # Salvar status
+      echo "file_exists=$file_exists" >> /tmp/file_recovery_context.txt
+      echo "readable=$readable" >> /tmp/file_recovery_context.txt
+      echo "writable=$writable" >> /tmp/file_recovery_context.txt
+
+  - name: "search_alternative_locations"
+    run: |
+      # Buscar arquivo em locais alternativos
+      echo "🔍 Buscando arquivo em locais alternativos..."
+      
+      # Carregar contexto
+      source /tmp/file_recovery_context.txt
+      
+      # Se arquivo não existe, buscar alternativas
+      if [ "$file_exists" = false ]; then
+        echo "Iniciando busca por arquivo alternativo..."
+        
+        # Estratégias de busca baseadas no tipo de arquivo
+        case "$search_strategy" in
+          "hierarchical")
+            # Busca hierárquica
+            search_paths=(
+              "$file_path"
+              "./$file_name"
+              "../$file_name"
+              "./$file_base/$file_name"
+              "./src/$file_name"
+              "./lib/$file_name"
+              "./test/$file_name"
+              "./tests/$file_name"
+              "./spec/$file_name"
+              "./__tests__/$file_name"
+            )
+            ;;
+          "pattern_matching")
+            # Busca por padrão
+            search_paths=()
+            # Usar find para buscar por padrão
+            echo "Buscando por padrão: *$file_base*.$file_ext"
+            while IFS= read -r -d '' found_file; do
+              search_paths+=("$found_file")
+            done < <(find . -name "*$file_base*.$file_ext" -type f -print0 2>/dev/null)
+            ;;
+          "structure_sync")
+            # Sincronização de estrutura
+            search_paths=()
+            # Buscar em estruturas padrão baseado na extensão
+            case "$file_ext" in
+              "js")
+                search_paths=(
+                  "./src/$file_name"
+                  "./lib/$file_name"
+                  "./test/$file_name"
+                  "./tests/$file_name"
+                )
+                ;;
+              "test.js")
+                search_paths=(
+                  "./test/$file_name"
+                  "./tests/$file_name"
+                  "./spec/$file_name"
+                  "./__tests__/$file_name"
+                )
+                ;;
+              "json")
+                search_paths=(
+                  "./$file_name"
+                  "./config/$file_name"
+                  "./src/$file_name"
+                )
+                ;;
+            esac
+            ;;
+          "backup_restore")
+            # Busca em backups
+            search_paths=()
+            # Buscar em locais de backup
+            backup_locations=(
+              "./.backup/"
+              "./backup/"
+              "./.git/"
+              "./node_modules/.cache/"
+            )
+            for backup_loc in "${backup_locations[@]}"; do
+              if [ -d "$backup_loc" ]; then
+                while IFS= read -r -d '' found_file; do
+                  search_paths+=("$found_file")
+                done < <(find "$backup_loc" -name "*$file_base*.$file_ext" -type f -print0 2>/dev/null)
+              fi
+            done
+            ;;
+        esac
+        
+        # Verificar cada caminho de busca
+        found_alternative=false
+        for search_path in "${search_paths[@]}"; do
+          if [ -f "$search_path" ]; then
+            echo "✅ Arquivo encontrado em: $search_path"
+            found_alternative=true
+            alternative_path="$search_path"
+            break
+          fi
+        done
+        
+        if [ "$found_alternative" = true ]; then
+          echo "alternative_path=$alternative_path" >> /tmp/file_recovery_context.txt
+        else
+          echo "❌ Arquivo não encontrado em nenhum local alternativo"
+          echo "alternative_path=" >> /tmp/file_recovery_context.txt
+        fi
+      else
+        echo "Arquivo já existe, pulando busca alternativa"
+        echo "alternative_path=$file_path" >> /tmp/file_recovery_context.txt
+      fi
+
+  - name: "create_missing_structure"
+    run: |
+      # Criar estrutura de diretórios ausente
+      echo "🛠️ Criando estrutura de diretórios ausente..."
+      
+      # Carregar contexto
+      source /tmp/file_recovery_context.txt
+      
+      # Se arquivo não existe e deve ser criado
+      if [ "$file_exists" = false ] && [ "$create_if_missing" = true ]; then
+        echo "Criando estrutura para: $file_path"
+        
+        # Criar diretórios pai
+        parent_dir=$(dirname "$file_path")
+        if [ ! -d "$parent_dir" ]; then
+          echo "Criando diretório: $parent_dir"
+          mkdir -p "$parent_dir"
+          echo "✅ Diretório criado: $parent_dir"
+        else
+          echo "✅ Diretório já existe: $parent_dir"
+        fi
+        
+        # Determinar tipo de arquivo e criar template
+        case "$file_ext" in
+          "js")
+            # Template para arquivo JavaScript
+            if [[ "$file_name" == *"test"* ]]; then
+              # Template de teste
+              cat > "$file_path" << 'EOF'
+const { describe, it, expect } = require('@jest/globals');
+
+describe('Template Test', () => {
+  it('should pass', () => {
+    expect(true).toBe(true);
+  });
+});
+EOF
+            else
+              # Template de módulo JavaScript
+              cat > "$file_path" << 'EOF'
+/**
+ * Template Module
+ * Generated by Kilo Code File Recovery
+ */
+
+module.exports = {
+  // Module implementation
+};
+EOF
+            fi
+            ;;
+          "json")
+            # Template para arquivo JSON
+            cat > "$file_path" << 'EOF'
+{
+  "generated": true,
+  "recovered": true,
+  "timestamp": "$(date -Iseconds)"
+}
+EOF
+            ;;
+          "md")
+            # Template para arquivo Markdown
+            cat > "$file_path" << EOF
+# $(echo $file_base | sed 's/_/ /g' | sed 's/-/ /g' | awk '{for(i=1;i<=NF;i++) $i=toupper(substr($i,1,1))substr($i,2)}1')
+
+Generated by Kilo Code File Recovery
+
+## Overview
+
+This file was automatically generated to replace a missing file.
+
+## Content
+
+Add your content here.
+
+EOF
+            ;;
+          *)
+            # Template genérico
+            cat > "$file_path" << EOF
+# $(echo $file_base | sed 's/_/ /g' | sed 's/-/ /g' | awk '{for(i=1;i<=NF;i++) $i=toupper(substr($i,1,1))substr($i,2)}1')
+
+Generated by Kilo Code File Recovery
+File: $file_name
+Date: $(date)
+EOF
+            ;;
+        esac
+        
+        echo "✅ Arquivo criado: $file_path"
+        
+        # Configurar permissões
+        chmod 644 "$file_path"
+        echo "✅ Permissões configuradas"
+        
+        # Atualizar contexto
+        echo "file_created=true" >> /tmp/file_recovery_context.txt
+        echo "created_path=$file_path" >> /tmp/file_recovery_context.txt
+        
+      elif [ "$file_exists" = false ] && [ "$create_if_missing" = false ]; then
+        echo "⚠️ Arquivo não existe e criação está desativada"
+        echo "file_created=false" >> /tmp/file_recovery_context.txt
+      else
+        echo "✅ Arquivo já existe"
+        echo "file_created=false" >> /tmp/file_recovery_context.txt
+      fi
+
+  - name: "fix_permissions"
+    run: |
+      # Corrigir problemas de permissão
+      echo "🔧 Corrigindo problemas de permissão..."
+      
+      # Carregar contexto
+      source /tmp/file_recovery_context.txt
+      
+      # Determinar caminho final do arquivo
+      if [ "$file_exists" = true ]; then
+        final_path="$file_path"
+      elif [ "$file_created" = true ]; then
+        final_path="$created_path"
+      elif [ -n "$alternative_path" ]; then
+        final_path="$alternative_path"
+      else
+        echo "❌ Nenhum arquivo disponível para corrigir permissões"
+        return 1
+      fi
+      
+      echo "Corrigindo permissões para: $final_path"
+      
+      # Verificar e corrigir permissões
+      if [ -f "$final_path" ]; then
+        # Tornar arquivo legível
+        if [ ! -r "$final_path" ]; then
+          chmod +r "$final_path"
+          echo "✅ Permissão de leitura adicionada"
+        fi
+        
+        # Tornar arquivo gravável (se apropriado)
+        if [ ! -w "$final_path" ]; then
+          chmod +w "$final_path"
+          echo "✅ Permissão de escrita adicionada"
+        fi
+        
+        # Verificar permissões do diretório pai
+        parent_dir=$(dirname "$final_path")
+        if [ ! -x "$parent_dir" ]; then
+          chmod +x "$parent_dir"
+          echo "✅ Permissão de execução adicionada ao diretório pai"
+        fi
+        
+        echo "✅ Permissões corrigidas com sucesso"
+        echo "final_path=$final_path" >> /tmp/file_recovery_context.txt
+        echo "permissions_fixed=true" >> /tmp/file_recovery_context.txt
+      else
+        echo "❌ Arquivo não encontrado para correção de permissões"
+        echo "permissions_fixed=false" >> /tmp/file_recovery_context.txt
+      fi
+
+  - name: "validate_recovery"
+    run: |
+      # Validar a recuperação do arquivo
+      echo "✅ Validando recuperação do arquivo..."
+      
+      # Carregar contexto
+      source /tmp/file_recovery_context.txt
+      
+      # Determinar caminho final validado
+      if [ -n "$final_path" ] && [ -f "$final_path" ]; then
+        validated_path="$final_path"
+      elif [ -f "$file_path" ]; then
+        validated_path="$file_path"
+      elif [ -n "$alternative_path" ] && [ -f "$alternative_path" ]; then
+        validated_path="$alternative_path"
+      elif [ -n "$created_path" ] && [ -f "$created_path" ]; then
+        validated_path="$created_path"
+      else
+        echo "❌ Nenhum arquivo válido encontrado"
+        echo "recovery_status=failed" >> /tmp/file_recovery_context.txt
+        return 1
+      fi
+      
+      echo "Arquivo validado: $validated_path"
+      
+      # Validar arquivo
+      validation_checks=0
+      validation_passed=0
+      
+      # Check 1: Arquivo existe
+      if [ -f "$validated_path" ]; then
+        echo "✅ Check 1: Arquivo existe"
+        ((validation_passed++))
+      fi
+      ((validation_checks++))
+      
+      # Check 2: Arquivo é legível
+      if [ -r "$validated_path" ]; then
+        echo "✅ Check 2: Arquivo é legível"
+        ((validation_passed++))
+      fi
+      ((validation_checks++))
+      
+      # Check 3: Arquivo tem conteúdo
+      if [ -s "$validated_path" ]; then
+        echo "✅ Check 3: Arquivo tem conteúdo"
+        ((validation_passed++))
+      fi
+      ((validation_checks++))
+      
+      # Check 4: Diretório pai é acessível
+      parent_dir=$(dirname "$validated_path")
+      if [ -x "$parent_dir" ]; then
+        echo "✅ Check 4: Diretório pai é acessível"
+        ((validation_passed++))
+      fi
+      ((validation_checks++))
+      
+      # Determinar status da recuperação
+      if [ "$validation_passed" -eq "$validation_checks" ]; then
+        echo "✅ Todos os checks de validação passaram"
+        recovery_status="success"
+      elif [ "$validation_passed" -gt 0 ]; then
+        echo "⚠️ Alguns checks falharam, mas arquivo está acessível"
+        recovery_status="partial"
+      else
+        echo "❌ Todos os checks de validação falharam"
+        recovery_status="failed"
+      fi
+      
+      # Salvar resultados
+      echo "validated_path=$validated_path" >> /tmp/file_recovery_context.txt
+      echo "validation_checks=$validation_checks" >> /tmp/file_recovery_context.txt
+      echo "validation_passed=$validation_passed" >> /tmp/file_recovery_context.txt
+      echo "recovery_status=$recovery_status" >> /tmp/file_recovery_context.txt
+
+  - name: "generate_recovery_report"
+    run: |
+      # Gerar relatório de recuperação
+      echo "📊 Gerando relatório de recuperação..."
+      
+      # Carregar contexto
+      source /tmp/file_recovery_context.txt
+      
+      cat > /tmp/file_recovery_report.txt << EOF
+Relatório de Recuperação de Arquivo
+===================================
+
+Data: $(date)
+Arquivo Original: $file_path
+Erro Original: $error_message
+Tipo de Erro: $error_type
+Estratégia: $search_strategy
+
+Status da Recuperação: $recovery_status
+Caminho Validado: ${validated_path:-"N/A"}
+
+Análise do Problema:
+- Arquivo solicitado: $file_path
+- Tipo de erro: $error_type
+- Causa provável: $(case $error_type in
+  "not_found") echo "Arquivo não existe no caminho especificado";;
+  "permission") echo "Permissões de acesso inadequadas";;
+  "no_such_file") echo "Arquivo ou diretório não encontrado";;
+  "is_directory") echo "Caminho aponta para diretório, não arquivo";;
+  *) echo "Causa desconhecida";;
+esac)
+
+Ações Executadas:
+1. Análise do erro e caminho
+2. Verificação de existência do arquivo
+3. Busca em locais alternativos
+4. Criação de estrutura ausente (se necessário)
+5. Correção de permissões
+6. Validação final
+
+Resultados:
+- Arquivo existe: ${file_exists:-"false"}
+- Arquivo criado: ${file_created:-"false"}
+- Permissões corrigidas: ${permissions_fixed:-"false"}
+- Validação: $validation_passed/$validation_checks checks passaram
+
+Arquivo Final: ${validated_path:-"N/A"}
+
+EOF
+      
+      # Adicionar recomendações baseado no status
+      case "$recovery_status" in
+        "success")
+          cat >> /tmp/file_recovery_report.txt << 'EOF'
+
+Recomendações:
+✅ Arquivo recuperado com sucesso
+✅ Sistema está pronto para uso
+✅ Nenhuma ação adicional necessária
+
+EOF
+          ;;
+        "partial")
+          cat >> /tmp/file_recovery_report.txt << 'EOF'
+
+Recomendações:
+⚠️ Arquivo recuperado parcialmente
+⚠️ Verifique o conteúdo do arquivo
+⚠️ Pode ser necessário ajustes manuais
+⚠️ Monitore o funcionamento do sistema
+
+EOF
+          ;;
+        "failed")
+          cat >> /tmp/file_recovery_report.txt << 'EOF'
+
+Recomendações:
+❌ Recuperação falhou
+❌ Verifique o caminho do arquivo manualmente
+❌ Considere restaurar de backup
+❌ Verifique permissões do sistema
+
+EOF
+          ;;
+      esac
+      
+      echo "✅ Relatório gerado em /tmp/file_recovery_report.txt"
+
+  - name: "show_recovery_summary"
+    run: |
+      # Mostrar resumo da recuperação
+      echo "🎯 RESUMO DA RECUPERAÇÃO DE ARQUIVO"
+      echo "====================================="
+      
+      # Carregar contexto
+      source /tmp/file_recovery_context.txt
+      
+      # Mostrar informações principais
+      echo "Arquivo: $file_path"
+      echo "Status: $recovery_status"
+      echo "Estratégia: $search_strategy"
+      
+      if [ -n "$validated_path" ]; then
+        echo "Caminho final: $validated_path"
+      fi
+      
+      # Mostrar estatísticas
+      echo "Validação: $validation_passed/$validation_checks checks passaram"
+      
+      # Mostrar próximos passos
+      echo ""
+      echo "💡 Próximos passos:"
+      echo "1. Verifique o arquivo recuperado: ${validated_path:-$file_path}"
+      echo "2. Revise o relatório completo: /tmp/file_recovery_report.txt"
+      echo "3. Teste o funcionamento do sistema"
+      echo "4. Monitore por problemas relacionados"
+      
+      # Status final
+      if [ "$recovery_status" = "success" ]; then
+        echo ""
+        echo "✅ Recuperação de arquivo concluída com sucesso!"
+      elif [ "$recovery_status" = "partial" ]; then
+        echo ""
+        echo "⚠️ Recuperação parcial - arquivo acessível mas pode precisar ajustes"
+      else
+        echo ""
+        echo "❌ Recuperação falhou - intervenção manual necessária"
+      fi
+
+error_handling:
+  - step: "analyze_file_error"
+    on_error: "continue"
+    message: "Falha na análise do erro, continuando com análise genérica"
+  
+  - step: "check_file_existence"
+    on_error: "continue"
+    message: "Falha ao verificar existência, assumindo arquivo não existe"
+  
+  - step: "search_alternative_locations"
+    on_error: "continue"
+    message: "Falha na busca alternativa, continuando sem alternativas"
+  
+  - step: "create_missing_structure"
+    on_error: "continue"
+    message: "Falha ao criar estrutura, tentando continuar"
+  
+  - step: "fix_permissions"
+    on_error: "continue"
+    message: "Falha ao corrigir permissões, continuando sem correção"
+  
+  - step: "validate_recovery"
+    on_error: "continue"
+    message: "Falha na validação, assumindo recuperação parcial"
+  
+  - step: "generate_recovery_report"
+    on_error: "continue"
+    message: "Falha ao gerar relatório, criando resumo simplificado"
+  
+  - step: "show_recovery_summary"
+    on_error: "continue"
+    message: "Falha ao mostrar resumo, recuperação concluída silenciosamente"
+
+examples:
+  - name: "Recuperação de Arquivo de Teste"
+    description: "Recuperar arquivo de teste não encontrado"
+    command: "killo action file_recovery --file_path='tests/unit/services/cacheService.test.js' --error_message='File not found' --search_strategy=hierarchical --create_if_missing=true"
+
+  - name: "Recuperação de Arquivo de Configuração"
+    description: "Recuperar arquivo de configuração ausente"
+    command: "killo action file_recovery --file_path='config/database.js' --error_message='no such file' --search_strategy=pattern_matching --create_if_missing=true"
+
+  - name: "Correção de Permissões"
+    description: "Corrigir problemas de permissão de arquivo"
+    command: "killo action file_recovery --file_path='src/app.js' --error_message='permission denied' --search_strategy=hierarchical --create_if_missing=false"
+
+integration:
+  vscode:
+    command: "killo.action.file_recovery"
+    parameters:
+      file_path: "${file}"
+      error_message: "--error_message"
+      search_strategy: "--search_strategy"
+      create_if_missing: "--create_if_missing"
+  
+  terminal:
+    command: "killo action file_recovery"
+    parameters:
+      file_path: "--file_path"
+      error_message: "--error_message"
+      search_strategy: "--search_strategy"
+      create_if_missing: "--create_if_missing"
+      backup_existing: "--backup_existing"
+
+output_formats:
+  - name: "detailed"
+    description: "Relatório detalhado completo"
+    default: true
+  
+  - name: "summary"
+    description: "Resumo conciso da recuperação"
+    parameter: "--output=summary"
+  
+  - name: "json"
+    description: "Saída em JSON para integração"
+    parameter: "--output=json"

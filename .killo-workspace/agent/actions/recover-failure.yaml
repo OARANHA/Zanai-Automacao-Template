@@ -1,0 +1,20 @@
+action:
+    name: recover-failure
+    provider: default
+    tools: [shell, filesystem]
+    timeouts: { requestMs: 180000 }
+    prompt: |
+        Recuperar projeto de falhas. Passos:
+        1) Identificar tipo de falha:
+           - node_modules corrompido
+           - .env faltando
+           - Scripts Kilo ausentes
+           - Dependências quebradas
+        2) Executar ações de recuperação:
+           - Reinstalar node_modules
+           - Recriar .env a partir de .env.example
+           - Reconfigurar scripts Kilo
+           - Corrigir dependências
+        3) Executar health check
+        4) Gerar relatório de recuperação
+        Regras: pt-BR; backup antes de modificar; perguntar se necessário.

@@ -1,0 +1,31 @@
+Regras de E/S:
+    - Para ler arquivos: SEMPRE usar pnpm run kread "<path>" HEAD:200 (ou ALL quando eu pedir "ler inteiro").
+    - Não usar search_files. Evitar filesystem.open para leitura; use shell+kread.
+action:
+    name: audit-all
+    provider: default
+    tools: [shell, filesystem]
+    timeouts: { requestMs: 180000 }
+    prompt: |
+        Audite TODO o repo. Passos:
+        1) Contexto (busca semântica):
+           - pnpm run ksearch "auth login supabase" 
+           - pnpm run ksearch "RBAC permission role"
+           - pnpm run ksearch "KPI chart table dashboard"
+           - pnpm run ksearch "dark mode #007BFF #FFA500 contrast"
+           Use os caminhos retornados como foco.
+        2) Verifique:
+           - Login/autenticação e rotas protegidas; RBAC (se houver).
+           - Dashboard enterprise: layout, KPI cards, gráficos, filtros, tabelas, estados loading/empty/error.
+           - Tema dark/light com #007BFF (primária) e #FFA500 (accent); contraste (WCAG AA).
+           - Variáveis .env necessárias (NOMES e exemplos, sem valores reais).
+        3) Qualidade (cole logs):
+           - pnpm install --no-frozen-lockfile || true
+           - pnpm -r typecheck || true
+           - pnpm -r lint || true
+           - pnpm -r build || true
+        4) Saída:
+           - Itens OK (bullets)
+           - Problemas por severidade com arquivo:linha
+           - Diffs (patch unified) mínimos + mensagem de commit (Conventional Commits)
+        Regras: pt-BR; nunca expor segredos.

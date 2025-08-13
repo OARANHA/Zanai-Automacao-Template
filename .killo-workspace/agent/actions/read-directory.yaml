@@ -1,0 +1,252 @@
+# .killo-workspace/agent/actions/read-directory.yaml
+name: "read_directory"
+description: "Lê conteúdo de diretório com tratamento robusto de erros"
+version: "1.0"
+author: "Killo Framework"
+
+parameters:
+  - name: "path"
+    type: "string"
+    required: true
+    description: "Caminho do diretório a ser lido (ex: /projeto/src)"
+    validation:
+      pattern: "^(/[a-zA-Z0-9_\\-\\.]+)*$"
+      message: "Caminho de diretório inválido"
+
+  - name: "recursive"
+    type: "boolean"
+    default: false
+    description: "Ler subdiretórios recursivamente"
+
+  - name: "include_hidden"
+    type: "boolean"
+    default: false
+    description: "Incluir arquivos ocultos"
+
+  - name: "file_types"
+    type: "array"
+    default: []
+    description: "Filtrar por tipos de arquivo (ex: ['.ts', '.js'])"
+
+  - name: "max_depth"
+    type: "integer"
+    default: 10
+    description: "Profundidade máxima para leitura recursiva"
+
+execution:
+  mode: "hybrid"
+  timeout: 60
+
+steps:
+  - name: "validate_parameters"
+    run: |
+      # Validação básica
+      if [ -z "$path" ]; then
+        echo "ERRO: Parâmetro 'path' é obrigatório"
+        exit 1
+      fi
+      
+      # Validar profundidade máxima
+      if [ "$max_depth" -lt 1 ] || [ "$max_depth" -gt 100 ]; then
+        echo "ERRO: max_depth deve estar entre 1 e 100"
+        exit 1
+      fi
+
+  - name: "check_directory_exists"
+    run: |
+      # Verificar se diretório existe
+      if [ ! -d "$path" ]; then
+        echo "ERRO: Diretório não encontrado: $path"
+        exit 1
+      fi
+      
+      # Verificar permissão de leitura
+      if [ ! -r "$path" ]; then
+        echo "ERRO: Sem permissão de leitura para: $path"
+        exit 1
+      fi
+
+  - name: "read_directory_content"
+    run: |
+      # Função para ler diretório
+      read_dir() {
+        local dir="$1"
+        local depth="$2"
+        local indent=""
+        
+        # Criar indentação para visualização
+        for ((i=0; i<depth; i++)); do
+          indent+="  "
+        done
+        
+        echo "${indent}📁 $(basename "$dir")/"
+        
+        # Listar conteúdo do diretório
+        local items=()
+        if [ "$include_hidden" = "true" ]; then
+          items=($(ls -A "$dir"))
+        else
+          items=($(ls "$dir"))
+        fi
+        
+        # Processar cada item
+        for item in "${items[@]}"; do
+          local item_path="$dir/$item"
+          
+          if [ -f "$item_path" ]; then
+            # Processar arquivo
+            local file_ext="${item##*.}"
+            local should_include=true
+            
+            # Verificar filtro de tipos
+            if [ ${#file_types[@]} -gt 0 ]; then
+              should_include=false
+              for type in "${file_types[@]}"; do
+                if [[ ".$file_ext" == "$type" ]]; then
+                  should_include=true
+                  break
+                fi
+              done
+            fi
+            
+            if [ "$should_include" = true ]; then
+              local file_size=$(du -h "$item_path" | cut -f1)
+              echo "${indent}  📄 $item ($file_size)"
+            fi
+          elif [ -d "$item_path" ] && [ "$recursive" = "true" ] && [ "$depth" -lt "$max_depth" ]; then
+            # Processar subdiretório recursivamente
+            read_dir "$item_path" $((depth + 1))
+          elif [ -d "$item_path" ]; then
+            echo "${indent}  📁 $item/"
+          fi
+        done
+      }
+      
+      # Iniciar leitura
+      echo "📂 Conteúdo do diretório: $path"
+      echo "=================================="
+      read_dir "$path" 0
+      echo "=================================="
+      echo "✅ Leitura concluída"
+
+  - name: "generate_json_output"
+    run: |
+      # Gerar saída JSON para integração
+      echo '{"directory": "'"$path"'", "content": ['
+      
+      # Função recursiva para JSON
+      generate_json() {
+        local dir="$1"
+        local depth="$2"
+        local first_item=true
+        
+        # Listar itens
+        local items=()
+        if [ "$include_hidden" = "true" ]; then
+          items=($(ls -A "$dir"))
+        else
+          items=($(ls "$dir"))
+        fi
+        
+        for item in "${items[@]}"; do
+          local item_path="$dir/$item"
+          
+          if [ "$first_item" = false ]; then
+            echo ","
+          else
+            first_item=false
+          fi
+          
+          if [ -f "$item_path" ]; then
+            local file_ext="${item##*.}"
+            local should_include=true
+            
+            if [ ${#file_types[@]} -gt 0 ]; then
+              should_include=false
+              for type in "${file_types[@]}"; do
+                if [[ ".$file_ext" == "$type" ]]; then
+                  should_include=true
+                  break
+                fi
+              done
+            fi
+            
+            if [ "$should_include" = true ]; then
+              local file_size=$(stat -c%s "$item_path")
+              echo '  {"type": "file", "name": "'"$item"'", "path": "'"$item_path"'", "size": '"$file_size"'}'
+            fi
+          elif [ -d "$item_path" ]; then
+            echo '  {"type": "directory", "name": "'"$item"'", "path": "'"$item_path"'"'
+            if [ "$recursive" = "true" ] && [ "$depth" -lt "$max_depth" ]; then
+              echo ', "children": ['
+              generate_json "$item_path" $((depth + 1))
+              echo '  ]'
+            fi
+            echo '  }'
+          fi
+        done
+      }
+      
+      generate_json "$path" 0
+      echo
+      echo ']}'
+
+error_handling:
+  - step: "validate_parameters"
+    on_error: "exit_with_error"
+    message: "Parâmetros inválidos"
+  
+  - step: "check_directory_exists"
+    on_error: "exit_with_error"
+    message: "Diretório inválido ou sem permissão"
+  
+  - step: "read_directory_content"
+    on_error: "continue"
+    message: "Erro na leitura do diretório"
+  
+  - step: "generate_json_output"
+    on_error: "continue"
+    message: "Erro na geração de JSON"
+
+examples:
+  - name: "Leitura Básica"
+    description: "Ler diretório simples"
+    command: "killo action read_directory --path=/projeto/src"
+
+  - name: "Leitura Recursiva"
+    description: "Ler diretório com subdiretórios"
+    command: "killo action read_directory --path=/projeto --recursive=true"
+
+  - name: "Filtrar por Tipo"
+    description: "Ler apenas arquivos TypeScript"
+    command: "killo action read_directory --path=/projeto/src --file_types=['.ts']"
+
+  - name: "Incluir Ocultos"
+    description: "Ler incluindo arquivos ocultos"
+    command: "killo action read_directory --path=/projeto --include_hidden=true"
+
+integration:
+  vscode:
+    command: "killo.action.read_directory"
+    parameters:
+      path: "${fileDirname}"
+      recursive: "--recursive"
+      file_types: "--file_types"
+  
+  terminal:
+    command: "killo action read_directory"
+    parameters:
+      path: "--path"
+      recursive: "--recursive"
+      include_hidden: "--include_hidden"
+      file_types: "--file_types"
+      max_depth: "--max_depth"
+
+output_formats:
+  - name: "tree"
+    description: "Saída em formato de árvore visual"
+    default: true
+  
+  - name: "json"
+    description: "Saída em JSON para integração"
+    parameter: "--output=json"

@@ -1,0 +1,155 @@
+# .killo-workspace/agent/actions/write-file.yaml
+name: "write_to_file"
+description: "Escreve conteúdo em arquivo com suporte a VSCode e terminal"
+version: "1.0"
+author: "Killo Framework"
+
+parameters:
+  - name: "path"
+    type: "string"
+    required: true
+    description: "Caminho completo do arquivo (ex: /projeto/src/arquivo.ts)"
+    validation:
+      pattern: "^(/[a-zA-Z0-9_\\-\\.]+)+\\.[a-zA-Z]+$"
+      message: "Caminho de arquivo inválido"
+
+  - name: "content"
+    type: "string"
+    required: true
+    description: "Conteúdo a ser escrito no arquivo"
+
+  - name: "editor"
+    type: "boolean"
+    default: false
+    description: "Abrir arquivo no VSCode após escrita"
+
+  - name: "create_dirs"
+    type: "boolean"
+    default: true
+    description: "Criar diretórios pai se não existirem"
+
+  - name: "backup"
+    type: "boolean"
+    default: true
+    description: "Criar backup do arquivo existente"
+
+execution:
+  mode: "hybrid"  # Funciona tanto no VSCode quanto no terminal
+  timeout: 30
+
+steps:
+  - name: "validate_parameters"
+    run: |
+      # Validação básica de parâmetros
+      if [ -z "$path" ]; then
+        echo "ERRO: Parâmetro 'path' é obrigatório"
+        exit 1
+      fi
+      
+      if [ -z "$content" ]; then
+        echo "ERRO: Parâmetro 'content' é obrigatório"
+        exit 1
+      fi
+
+  - name: "create_directories"
+    run: |
+      # Criar diretórios pai se necessário
+      if [ "$create_dirs" = "true" ]; then
+        dir_path=$(dirname "$path")
+        if [ ! -d "$dir_path" ]; then
+          echo "Criando diretórios: $dir_path"
+          mkdir -p "$dir_path"
+        fi
+      fi
+    condition: "$create_dirs == true"
+
+  - name: "backup_existing"
+    run: |
+      # Criar backup se arquivo existir
+      if [ -f "$path" ] && [ "$backup" = "true" ]; then
+        timestamp=$(date +%Y%m%d_%H%M%S)
+        backup_path="${path}.backup_${timestamp}"
+        echo "Criando backup: $backup_path"
+        cp "$path" "$backup_path"
+      fi
+    condition: "$backup == true"
+
+  - name: "write_content"
+    run: |
+      # Escrever conteúdo no arquivo
+      echo "$content" > "$path"
+      echo "Arquivo escrito com sucesso: $path"
+
+  - name: "open_in_editor"
+    run: |
+      # Abrir no VSCode se solicitado
+      if [ "$editor" = "true" ]; then
+        echo "Abrindo arquivo no VSCode..."
+        code "$path"
+      fi
+    condition: "$editor == true"
+
+  - name: "verify_file"
+    run: |
+      # Verificar se arquivo foi criado corretamente
+      if [ -f "$path" ]; then
+        echo "✅ Verificação concluída: Arquivo existe"
+        echo "Tamanho: $(wc -c < "$path") bytes"
+      else
+        echo "❌ ERRO: Arquivo não foi criado"
+        exit 1
+      fi
+
+error_handling:
+  - step: "validate_parameters"
+    on_error: "exit_with_error"
+    message: "Parâmetros inválidos ou ausentes"
+  
+  - step: "create_directories"
+    on_error: "continue"
+    message: "Falha ao criar diretórios"
+  
+  - step: "backup_existing"
+    on_error: "continue"
+    message: "Falha ao criar backup"
+  
+  - step: "write_content"
+    on_error: "exit_with_error"
+    message: "Falha ao escrever arquivo"
+  
+  - step: "open_in_editor"
+    on_error: "continue"
+    message: "Falha ao abrir editor"
+  
+  - step: "verify_file"
+    on_error: "exit_with_error"
+    message: "Falha na verificação do arquivo"
+
+examples:
+  - name: "Exemplo Básico"
+    description: "Escrever arquivo simples"
+    command: "killo action write_to_file --path=/projeto/teste.txt --content='Hello World'"
+
+  - name: "Exemplo com Editor"
+    description: "Escrever e abrir no VSCode"
+    command: "killo action write_to_file --path=/projeto/src/component.tsx --content='import React from \"react\";' --editor=true"
+
+  - name: "Exemplo com Backup"
+    description: "Escrever com backup automático"
+    command: "killo action write_to_file --path=/projeto/config.yaml --content='setting: value' --backup=true"
+
+integration:
+  vscode:
+    command: "killo.action.write_to_file"
+    parameters:
+      path: "${file}"
+      content: "${selectedText}"
+      editor: true
+  
+  terminal:
+    command: "killo action write_to_file"
+    parameters:
+      path: "--path"
+      content: "--content"
+      editor: "--editor"
+      backup: "--backup"

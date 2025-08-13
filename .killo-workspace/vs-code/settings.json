@@ -1,0 +1,42 @@
+{
+  "killo.workspace.enabled": true,
+  "killo.agent.mode": "full-stack-super-agent",
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "typescript.preferences.preferTypeOnlyAutoImports": true,
+  "files.associations": {
+    "*.yaml": "yaml",
+    "*.yml": "yaml"
+  },
+  "search.exclude": {
+    "**/.killo-workspace": true,
+    "**/node_modules": true,
+    "**/dist": true,
+    "**/build": true
+  },
+  "files.watcherExclude": {
+    "**/.killo-workspace/**": true,
+    "**/node_modules/**": true
+  },
+  "terminal.integrated.shell.linux": "/bin/bash",
+  "terminal.integrated.shell.osx": "/bin/zsh",
+  "terminal.integrated.shell.windows": "C:\\Program Files\\Git\\bin\\bash.exe",
+  "git.enableSmartCommit": true,
+  "git.autofetch": true,
+  "docker.showStartPage": false,
+  "python.analysis.autoImportCompletions": true,
+  "tailwindCSS.includeLanguages": {
+    "typescript": "javascript",
+    "typescriptreact": "javascript"
+  },
+  "emmet.includeLanguages": {
+    "typescript": "html",
+    "typescriptreact": "html"
+  },
+  "cSpell.words": [
+    "kilo",
+    "qdrant",
+    "ollama",
+    "shadcn"
+  ]
+}

@@ -1,0 +1,22 @@
+action:
+    name: bootstrap-project
+    provider: default
+    tools: [shell, filesystem]
+    timeouts: { requestMs: 300000 }
+    prompt: |
+        Bootstrap um projeto Kilo Code. Passos:
+        1) Detectar tipo de projeto (novo vs existente).
+        2) Se novo:
+           - Oferecer templates: nextjs-dashboard, node-api, react-admin, universal-starter
+           - Copiar template escolhido
+           - Instalar dependências
+        3) Se existente:
+           - Analisar estrutura atual
+           - Integrar com Kilo Code
+           - Adicionar scripts necessários
+        4) Configurar VS Code:
+           - Copiar .vs-code
+           - Instalar extensões
+        5) Executar health check
+        6) Gerar relatório de configuração
+        Regras: pt-BR; usar comandos do projeto; nunca sobrescrever sem confirmação.

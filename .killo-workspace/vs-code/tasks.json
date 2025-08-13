@@ -1,0 +1,49 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Kilo: Bootstrap Project",
+      "type": "shell",
+      "command": "./.killo-workspace/scripts/kilo-bootstrap.sh",
+      "group": "build",
+      "presentation": {
+        "reveal": "always",
+        "panel": "new"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Kilo: Health Check",
+      "type": "shell",
+      "command": "node .killo-workspace/health-check/project-scanner.js",
+      "group": "build",
+      "presentation": {
+        "reveal": "always",
+        "panel": "new"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Kilo: Recover Failure",
+      "type": "shell",
+      "command": "./.killo-workspace/scripts/kilo-recover.sh",
+      "group": "build",
+      "presentation": {
+        "reveal": "always",
+        "panel": "new"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Kilo: Index Project",
+      "type": "shell",
+      "command": "pnpm run kindex .",
+      "group": "build",
+      "presentation": {
+        "reveal": "always",
+        "panel": "new"
+      },
+      "problemMatcher": []
+    }
+  ]
+}

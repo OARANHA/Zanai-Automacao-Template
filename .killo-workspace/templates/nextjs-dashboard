@@ -1,0 +1,92 @@
+# Next.js Dashboard Template
+
+Este template cria um dashboard enterprise completo com Next.js 14, Tailwind CSS e Chart.js.
+
+## Estrutura do Template
+
+```
+.
+├── package.json
+├── next.config.js
+├── tailwind.config.js
+├── tsconfig.json
+├── .env.local
+├── public/
+│   └── favicon.ico
+└── src/
+    ├── app/
+    │   ├── layout.tsx
+    │   ├── page.tsx
+    │   ├── globals.css
+    │   └── api/
+    │       └── metrics/
+    │           └── route.ts
+    ├── components/
+    │   ├── ui/
+    │   │   ├── button.tsx
+    │   │   ├── card.tsx
+    │   │   └── chart.tsx
+    │   ├── layout/
+    │   │   ├── navbar.tsx
+    │   │   └── sidebar.tsx
+    │   └── dashboard/
+    │       ├── kpi-cards.tsx
+    │       ├── revenue-chart.tsx
+    │       └── user-activity.tsx
+    ├── lib/
+    │   ├── utils.ts
+    │   └── api.ts
+    └── types/
+        └── index.ts
+```
+
+## Instalação
+
+```bash
+# Copiar template
+cp -r .killo-workspace/templates/nextjs-dashboard meu-dashboard
+
+# Entrar no diretório
+cd meu-dashboard
+
+# Instalar dependências
+npm install
+
+# Iniciar desenvolvimento
+npm run dev
+```
+
+## Recursos
+
+- 🎨 **Design Moderno**: Tailwind CSS com componentes reutilizáveis
+- 📊 **Gráficos Interativos**: Chart.js para visualização de dados
+- 🚀 **Performance**: Next.js 14 com App Router
+- 📱 **Responsivo**: Design adaptável para todos os dispositivos
+- 🔐 **Autenticação Pronta**: Configuração básica para NextAuth
+- 📈 **KPIs em Tempo Real**: Cards métricos atualizáveis
+
+## Comandos Disponíveis
+
+- `npm run dev` - Inicia o servidor de desenvolvimento
+- `npm run build` - Constrói o projeto para produção
+- `npm run start` - Inicia o servidor de produção
+- `npm run lint` - Executa o linter
+
+## Customização
+
+### Adicionar Novos KPIs
+Edite `src/components/dashboard/kpi-cards.tsx` para adicionar novas métricas.
+
+### Modificar Gráficos
+Atualize `src/components/dashboard/revenue-chart.tsx` com seus dados e tipos de gráfico.
+
+### Tema
+Modifique `tailwind.config.js` e `src/app/globals.css` para personalizar o tema.
+
+## Integração com Kilo
+
+Este template está otimizado para integração com o sistema Kilo:
+
+1. **Busca Semântica**: Configure a indexação automática dos componentes
+2. **Agente IA**: Use o agente para gerar novas funcionalidades
+3. **Deploy**: Pronto para deploy em Vercel, Netlify ou plataforma própria
