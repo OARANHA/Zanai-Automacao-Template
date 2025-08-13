@@ -1,0 +1,357 @@
+agent:
+  name: "Framework-Creator"
+  description: "Meta-Agente autônomo para criação de frameworks de aplicativos"
+  version: "1.0.0"
+  type: "meta-agent"
+  capabilities:
+    - "Criação de frameworks especializados"
+    - "Geração dinâmica de agentes MD"
+    - "Auto-evolução e adaptação"
+    - "Orquestração de múltiplos agentes"
+    - "Análise de arquitetura e design"
+
+triggers:
+  keywords:
+    - "criar framework"
+    - "gerar framework"
+    - "framework creator"
+    - "meta-framework"
+    - "arquitetura de aplicativo"
+    - "estrutura de projeto"
+  
+  patterns:
+    - "criar.*framework.*para"
+    - "gerar.*arquitetura.*de"
+    - "desenvolver.*estrutura.*para"
+    - "construir.*plataforma.*para"
+
+workflow:
+  phases:
+    - name: "análise_de_requisitos"
+      description: "Analisar requisitos e definir escopo do framework"
+      steps:
+        - name: "coletar_requisitos"
+          action: "extract_requirements"
+          inputs:
+            - user_input
+            - project_context
+          outputs:
+            - requirements_spec
+            - constraints
+            - preferences
+        
+        - name: "analisar_viabilidade"
+          action: "feasibility_analysis"
+          inputs:
+            - requirements_spec
+            - available_technologies
+          outputs:
+            - feasibility_report
+            - risk_assessment
+            - recommendations
+        
+        - name: "definir_arquitetura"
+          action: "architecture_design"
+          inputs:
+            - requirements_spec
+            - feasibility_report
+          outputs:
+            - architecture_blueprint
+            - technology_stack
+            - design_patterns
+
+    - name: "design_framework"
+      description: "Design detalhado do framework e seus componentes"
+      steps:
+        - name: "definir_estrutura"
+          action: "define_structure"
+          inputs:
+            - architecture_blueprint
+            - technology_stack
+          outputs:
+            - directory_structure
+            - module_organization
+            - file_hierarchy
+        
+        - name: "design_componentes"
+          action: "design_components"
+          inputs:
+            - architecture_blueprint
+            - requirements_spec
+          outputs:
+            - core_components
+            - utilities
+            - interfaces
+            - abstractions
+        
+        - name: "definir_padroes"
+          action: "define_patterns"
+          inputs:
+            - design_patterns
+            - component_design
+          outputs:
+            - coding_standards
+            - naming_conventions
+            - architectural_patterns
+            - best_practices
+
+    - name: "gerar_codigo"
+      description: "Geração automática do código do framework"
+      steps:
+        - name: "criar_estrutura"
+          action: "create_directory_structure"
+          inputs:
+            - directory_structure
+          outputs:
+            - created_directories
+            - base_files
+        
+        - name: "gerar_core"
+          action: "generate_core_code"
+          inputs:
+            - core_components
+            - technology_stack
+          outputs:
+            - core_modules
+            - base_classes
+            - interfaces
+        
+        - name: "gerar_utilities"
+          action: "generate_utilities"
+          inputs:
+            - utilities
+            - technology_stack
+          outputs:
+            - utility_functions
+            - helper_classes
+            - common_modules
+        
+        - name: "gerar_configuracoes"
+          action: "generate_configurations"
+          inputs:
+            - technology_stack
+            - project_context
+          outputs:
+            - config_files
+            - build_scripts
+            - deployment_files
+
+    - name: "criar_agentes"
+      description: "Criação dinâmica de agentes especializados"
+      steps:
+        - name: "identificar_necessidades"
+          action: "identify_agent_needs"
+          inputs:
+            - framework_complexity
+            - project_scope
+            - special_requirements
+          outputs:
+            - required_agents
+            - agent_specifications
+            - activation_triggers
+        
+        - name: "gerar_agentes_md"
+          action: "generate_agent_mds"
+          inputs:
+            - required_agents
+            - agent_specifications
+          outputs:
+            - created_agents
+            - agent_documentation
+            - integration_guides
+        
+        - name: "configurar_orquestracao"
+          action: "setup_orchestration"
+          inputs:
+            - created_agents
+            - workflow_requirements
+          outputs:
+            - orchestration_config
+            - communication_protocols
+            - coordination_rules
+
+    - name: "validar_e_otimizar"
+      description: "Validação e otimização do framework gerado"
+      steps:
+        - name: "executar_testes"
+          action: "run_validation_tests"
+          inputs:
+            - generated_framework
+            - test_specifications
+          outputs:
+            - test_results
+            - quality_metrics
+            - issues_found
+        
+        - name: "otimizar_performance"
+          action: "optimize_performance"
+          inputs:
+            - test_results
+            - performance_requirements
+          outputs:
+            - optimized_code
+            - performance_improvements
+            - benchmarks
+        
+        - name: "gerar_documentacao"
+          action: "generate_documentation"
+          inputs:
+            - final_framework
+            - architecture_blueprint
+            - usage_examples
+          outputs:
+            - user_guide
+            - api_documentation
+            - examples
+            - tutorials
+
+outputs:
+  framework_package:
+    description: "Pacote completo do framework gerado"
+    contains:
+      - source_code: "Código fonte completo"
+      - documentation: "Documentação detalhada"
+      - examples: "Exemplos de uso"
+      - tests: "Suíte de testes"
+      - configuration: "Arquivos de configuração"
+      - agents: "Agentes especializados gerados"
+  
+  deployment_guide:
+    description: "Guia de deploy e utilização"
+    contains:
+      - installation_steps: "Passos para instalação"
+      - configuration_guide: "Guia de configuração"
+      - usage_examples: "Exemplos de uso"
+      - best_practices: "Melhores práticas"
+      - troubleshooting: "Solução de problemas"
+
+error_handling:
+  recovery_strategies:
+    - name: "rollback_to_stable_state"
+      condition: "critical_error_in_generation"
+      action: "restore_last_stable_version"
+    
+    - name: "regenerate_failed_component"
+      condition: "component_generation_failed"
+      action: "regenerate_with_alternative_approach"
+    
+    - name: "fallback_to_simplified_version"
+      condition: "complexity_too_high"
+      action: "generate_simplified_framework_version"
+  
+  fallback_agents:
+    - "error-recovery"
+    - "file-recovery"
+    - "thought-recovery"
+    - "system-validator"
+
+monitoring:
+  metrics:
+    - generation_success_rate: "Taxa de sucesso na geração"
+    - code_quality_score: "Pontuação de qualidade do código"
+    - performance_index: "Índice de performance"
+    - user_satisfaction: "Satisfação do usuário"
+    - agent_efficiency: "Eficiência dos agentes gerados"
+  
+  alerts:
+    - condition: "generation_success_rate < 90%"
+      action: "trigger_optimization_protocol"
+    
+    - condition: "code_quality_score < 85%"
+      action: "activate_code_quality_agent"
+    
+    - condition: "performance_index < 80%"
+      action: "activate_performance_optimizer"
+
+integration:
+  supported_platforms:
+    - "github"
+    - "docker"
+    - "aws"
+    - "azure"
+    - "gcp"
+    - "vercel"
+    - "netlify"
+  
+  external_services:
+    - "npm"
+    - "yarn"
+    - "pip"
+    - "maven"
+    - "gradle"
+    - "docker_hub"
+  
+  development_tools:
+    - "vscode"
+    - "postman"
+    - "jest"
+    - "cypress"
+    - "eslint"
+    - "prettier"
+
+auto_evolution:
+  learning_mechanisms:
+    - name: "pattern_recognition"
+      description: "Reconhecimento de padrões em projetos bem-sucedidos"
+    
+    - name: "feedback_analysis"
+      description: "Análise de feedback dos usuários"
+    
+    - name: "technology_trends"
+      description: "Monitoramento de tendências tecnológicas"
+    
+    - name: "performance_optimization"
+      description: "Otimização baseada em métricas de performance"
+  
+  adaptation_triggers:
+    - "new_technology_emergence"
+    - "user_feedback_patterns"
+    - "performance_bottlenecks"
+    - "security_vulnerabilities"
+    - "scalability_requirements"
+
+security:
+  measures:
+    - "code_vulnerability_scanning"
+    - "dependency_security_check"
+    - "input_validation"
+    - "access_control"
+    - "data_encryption"
+    - "audit_logging"
+  
+  compliance:
+    - "gdpr"
+    - "soc2"
+    - "iso27001"
+    - "pci_dss"
+    - "hipaa"
+
+scalability:
+  horizontal_scaling:
+    - "microservices_architecture"
+    - "load_balancing"
+    - "container_orchestration"
+    - "service_discovery"
+  
+  vertical_scaling:
+    - "resource_optimization"
+    - "caching_strategies"
+    - "database_optimization"
+    - "memory_management"
+
+performance:
+  optimization_techniques:
+    - "lazy_loading"
+    - "code_splitting"
+    - "tree_shaking"
+    - "minification"
+    - "bundling"
+    - "compression"
+  
+  monitoring:
+    - "response_time"
+    - "throughput"
+    - "error_rate"
+    - "resource_utilization"
+    - "memory_usage"
+    - "cpu_usage"
